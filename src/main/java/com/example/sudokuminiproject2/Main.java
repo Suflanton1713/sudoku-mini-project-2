@@ -15,5 +15,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         WelcomeStage.getInstance();
+        System.out.println("hi");
     }
 }
