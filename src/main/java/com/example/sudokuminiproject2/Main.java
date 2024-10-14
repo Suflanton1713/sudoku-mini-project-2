@@ -16,5 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         WelcomeStage.getInstance();
         System.out.println("hi");
+        System.out.println("hi");
+        System.out.println("hi");
     }
 }
