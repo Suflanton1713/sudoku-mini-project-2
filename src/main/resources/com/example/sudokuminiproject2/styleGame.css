@@ -1,0 +1,33 @@
+.gridPaneClass{
+    -fx-background-image: url('mainGameBackground.png');
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#returnButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("returnButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#returnButton:hover {
+    -fx-background-image: url("returnButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#newGameButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("newGameButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#newGameButton:hover {
+    -fx-background-image: url("newGameButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#timeLabel{
+    -fx-background-color: transparent;
+    -fx-background-image: url("timeLabel.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}

@@ -1,5 +1,6 @@
 package com.example.sudokuminiproject2;
 
+import com.example.sudokuminiproject2.view.GameStage;
 import com.example.sudokuminiproject2.view.WelcomeStage;
 import javafx.application.Application;
 import javafx.stage.Stage;

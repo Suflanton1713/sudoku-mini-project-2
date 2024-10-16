@@ -13,7 +13,8 @@ public class WelcomeStage extends Stage {
     public WelcomeStage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/sudokuminiproject2/welcome-view.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root,1000,650);
+        setMaximized(true);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/com/example/sudokuminiproject2/styleWelcome.css").toExternalForm());
         setScene(scene);
         setTitle("Sudoku");

@@ -22,7 +22,8 @@ public class GameStage extends Stage {
 
         gameController = loader.getController();
 
-        Scene scene = new Scene(root,1000,650);
+        setMaximized(true);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/com/example/sudokuminiproject2/styleGame.css").toExternalForm());
         setScene(scene);
         setTitle("Sudoku");
