@@ -141,10 +141,11 @@ public class GameController {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 TextField currentField = textFieldBoard.get(i).get(j);
-                handleTextFields(currentField);
+                handleTextFields(currentField,i,j);
             }
         }
         showGameBoard();
+        System.out.println(actualBoard.showIdealGame());
     }
 
     private void initializeTextFieldBoard() {
@@ -154,6 +155,7 @@ public class GameController {
                 row.add(null);
             }
             textFieldBoard.add(row);
+
         }
     }
 
@@ -172,21 +174,29 @@ public class GameController {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 textFieldBoard.get(i).set(j, textFields.get(index));
+                textFieldBoard.get(i).get(j).getStyleClass().add("default");
                 System.out.println("fila" + i + "columna" + j + " essss: " + textFields.get(index));
                 index++;
             }
         }
     }
 
-
-
-    private void handleTextFields(TextField txt) {
+    private void handleTextFields(TextField txt, int row, int col) {
         txt.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 String currentText = txt.getText();
                 if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
                     System.out.println("Entrada válida: " + currentText);
+                    if(isCorrectNumber(txt,row,col)) {
+                        txt.getStyleClass().remove("incorrect");
+                        txt.getStyleClass().remove("default");
+                        txt.getStyleClass().add("correct");
+                        txt.setEditable(false);
+                    }else{
+                        txt.getStyleClass().remove("default");
+                        txt.getStyleClass().add("incorrect");
+                    }
                 } else {
                     txt.setText("");
                 }
@@ -209,7 +219,15 @@ public class GameController {
                 }
             }
         }
+    }
 
+    public boolean isCorrectNumber(TextField currentField, int row, int col) {
+        int number = Integer.parseInt(currentField.getText());
+        if (actualBoard.getNumberByIndex(col,row) == number) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @FXML
