@@ -1,6 +1,7 @@
 package com.example.sudokuminiproject2;
 
 import com.example.sudokuminiproject2.model.board.Board;
+import com.example.sudokuminiproject2.model.board.GameBoard;
 import com.example.sudokuminiproject2.view.WelcomeStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -18,7 +19,15 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         long startTime = System.currentTimeMillis();
         Board board = new Board();
-        System.out.println(board.showBoard());
+
+        GameBoard gameBoard = new GameBoard();
+
+        System.out.println(gameBoard.showBoard());
+        System.out.println(board.showIdealGame());
+
+        gameBoard.setInitialHints(board);
+        System.out.println("Board with hints");
+        System.out.println(gameBoard.showBoard());
 
         long endTime = System.currentTimeMillis(); // Tiempo final
         long duration = endTime - startTime; // Duración en milisegundos

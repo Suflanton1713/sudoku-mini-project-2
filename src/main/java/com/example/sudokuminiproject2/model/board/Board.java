@@ -12,7 +12,7 @@ public class Board extends BoardAdapter {
         for(int i=0; i<6; i++){
             List<Integer> row = new ArrayList<>(6);
             for (int x = 0; x < 6; x++) {
-                row.add(-1);
+                row.add(0);
             }
 
             board.add(row);
@@ -128,17 +128,9 @@ public class Board extends BoardAdapter {
             }
         }
 
-        public String showBoard(){
-        String finalMessage = "";
-        for(int i=0; i<6; i++){
-            for(int j=0; j<6; j++){
-                finalMessage = finalMessage + board.get(j).get(i) + " ";
-            }
-            finalMessage = finalMessage + "\n";
-        }
-        return finalMessage;
+    public int getNumberByIndex(int column, int row){  return board.get(column).get(row);  };
 
-        }
+
 
 
     }
