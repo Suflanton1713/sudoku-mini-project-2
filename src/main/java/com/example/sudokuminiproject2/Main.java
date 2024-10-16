@@ -18,17 +18,26 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         long startTime = System.currentTimeMillis();
-        Board board = new Board();
+        Board actualBoard = new Board();
 
-        GameBoard gameBoard = new GameBoard();
+        GameBoard gameBoard = new GameBoard(actualBoard);
 
         System.out.println(gameBoard.showBoard());
-        System.out.println(board.showIdealGame());
+        System.out.println(actualBoard.showIdealGame());
 
-        gameBoard.setInitialHints(board);
+        gameBoard.setInitialHints();
         System.out.println("Board with hints");
         System.out.println(gameBoard.showBoard());
 
+        GameBoard.Hint hints = gameBoard.new Hint();
+
+
+        for(int i=0; i<24; i++){
+            hints.randomHint();
+            System.out.println(i + " hint");
+            System.out.println(gameBoard.showBoard());
+        }
+        System.out.println(hints.getHints());
         long endTime = System.currentTimeMillis(); // Tiempo final
         long duration = endTime - startTime; // Duración en milisegundos
 

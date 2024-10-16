@@ -57,7 +57,7 @@ public class Board extends BoardAdapter {
         } while(randomNumber == 0);
 
         allowedNumbers[randomIndex] = 0;
-        // - 1, because at the end of the do-while we add 1 to randomIndex even if that number is allowed
+
         System.out.println("The number given is "+ randomNumber);
         return randomNumber;
     }
@@ -129,6 +129,10 @@ public class Board extends BoardAdapter {
         }
 
     public int getNumberByIndex(int column, int row){  return board.get(column).get(row);  };
+
+    public List<List<Integer>> getBoard(){
+        return board;
+    }
 
 
 
