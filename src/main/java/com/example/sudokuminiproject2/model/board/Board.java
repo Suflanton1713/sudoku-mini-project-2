@@ -12,7 +12,7 @@ public class Board extends BoardAdapter {
         for(int i=0; i<6; i++){
             List<Integer> row = new ArrayList<>(6);
             for (int x = 0; x < 6; x++) {
-                row.add(-1);
+                row.add(0);
             }
 
             board.add(row);
@@ -45,6 +45,7 @@ public class Board extends BoardAdapter {
         int randomIndex = 0;
         randomIndex = random.nextInt(allowedNumbers.length);
 
+
         do {
             System.out.println("The random index is " + randomIndex);
             randomNumber = (allowedNumbers[randomIndex] != 0 ? allowedNumbers[randomIndex] : 0);
@@ -56,7 +57,7 @@ public class Board extends BoardAdapter {
         } while(randomNumber == 0);
 
         allowedNumbers[randomIndex] = 0;
-        // - 1, because at the end of the do-while we add 1 to randomIndex even if that number is allowed
+
         System.out.println("The number given is "+ randomNumber);
         return randomNumber;
     }
@@ -127,17 +128,13 @@ public class Board extends BoardAdapter {
             }
         }
 
-        public String showBoard(){
-        String finalMessage = "";
-        for(int i=0; i<6; i++){
-            for(int j=0; j<6; j++){
-                finalMessage = finalMessage + board.get(j).get(i) + " ";
-            }
-            finalMessage = finalMessage + "\n";
-        }
-        return finalMessage;
+    public int getNumberByIndex(int column, int row){  return board.get(column).get(row);  };
 
-        }
+    public List<List<Integer>> getBoard(){
+        return board;
+    }
+
+
 
 
     }

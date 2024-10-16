@@ -124,10 +124,19 @@ public class GameController {
     private TextField textField55;
 
     private Game game;
+    private List<List<TextField>> textFieldBoard = new ArrayList<>(6);
     private List<TextField> textFields = new ArrayList<>();
 
     public void initialize() {
         this.game = new Game();
+        for(int i=0; i<6; i++){
+            List<TextField> row = new ArrayList<>(6);
+            for (int x = 0; x < 6; x++) {
+                row.add(null);
+            }
+
+            textFieldBoard.add(row);
+        }
         textFields.addAll(Arrays.asList(
                 textField00, textField01, textField02, textField03, textField04, textField05,
                 textField10, textField11, textField12, textField13, textField14, textField15,
@@ -136,8 +145,23 @@ public class GameController {
                 textField40, textField41, textField42, textField43, textField44, textField45,
                 textField50, textField51, textField52, textField53, textField54, textField55
         ));
-        for (int i=0; textFields.size() > i; i++) {
-            handleTextFields(textFields.get(i));
+        int index = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                textFieldBoard.get(i).set(j, textFields.get(index));
+                System.out.println("fila"+i+"columna"+j+" essss: "+ textFields.get(index));
+
+//                handleTextFields(textFieldBoard.get(i).get(j));
+//                System.out.println("lo que se le hace handle: "+i+j+ textFieldBoard.get(i).get(j));
+                index++;
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                TextField currentField = textFieldBoard.get(i).get(j);
+                handleTextFields(currentField);
+            }
         }
     }
 
