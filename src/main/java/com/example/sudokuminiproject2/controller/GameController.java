@@ -1,6 +1,8 @@
 package com.example.sudokuminiproject2.controller;
 
-import com.example.sudokuminiproject2.model.input.Game;
+import com.example.sudokuminiproject2.model.board.Board;
+import com.example.sudokuminiproject2.model.board.GameBoard;
+import com.example.sudokuminiproject2.model.input.Input;
 import com.example.sudokuminiproject2.view.GameStage;
 import com.example.sudokuminiproject2.view.WelcomeStage;
 import javafx.event.ActionEvent;
@@ -123,20 +125,39 @@ public class GameController {
     @FXML
     private TextField textField55;
 
-    private Game game;
+    private Input input;
+    private Board actualBoard;
+    private GameBoard gameBoard;
     private List<List<TextField>> textFieldBoard = new ArrayList<>(6);
     private List<TextField> textFields = new ArrayList<>();
 
     public void initialize() {
-        this.game = new Game();
-        for(int i=0; i<6; i++){
+        this.input = new Input();
+        this.actualBoard = new Board();
+        this.gameBoard = new GameBoard(this.actualBoard);
+        initializeTextFieldBoard();
+        initializeTextFields();
+        assignTextFieldsToBoard();
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                TextField currentField = textFieldBoard.get(i).get(j);
+                handleTextFields(currentField);
+            }
+        }
+        showGameBoard();
+    }
+
+    private void initializeTextFieldBoard() {
+        for (int i = 0; i < 6; i++) {
             List<TextField> row = new ArrayList<>(6);
             for (int x = 0; x < 6; x++) {
                 row.add(null);
             }
-
             textFieldBoard.add(row);
         }
+    }
+
+    private void initializeTextFields() {
         textFields.addAll(Arrays.asList(
                 textField00, textField01, textField02, textField03, textField04, textField05,
                 textField10, textField11, textField12, textField13, textField14, textField15,
@@ -145,32 +166,26 @@ public class GameController {
                 textField40, textField41, textField42, textField43, textField44, textField45,
                 textField50, textField51, textField52, textField53, textField54, textField55
         ));
+    }
+    private void assignTextFieldsToBoard() {
         int index = 0;
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 textFieldBoard.get(i).set(j, textFields.get(index));
-                System.out.println("fila"+i+"columna"+j+" essss: "+ textFields.get(index));
-
-//                handleTextFields(textFieldBoard.get(i).get(j));
-//                System.out.println("lo que se le hace handle: "+i+j+ textFieldBoard.get(i).get(j));
+                System.out.println("fila" + i + "columna" + j + " essss: " + textFields.get(index));
                 index++;
             }
         }
-
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                TextField currentField = textFieldBoard.get(i).get(j);
-                handleTextFields(currentField);
-            }
-        }
     }
+
+
 
     private void handleTextFields(TextField txt) {
         txt.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 String currentText = txt.getText();
-                if (game.isValidLength(currentText) && game.isValidNumber(currentText)) {
+                if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
                     System.out.println("Entrada válida: " + currentText);
                 } else {
                     txt.setText("");
@@ -179,6 +194,24 @@ public class GameController {
             }
         });
     }
+
+    public void showGameBoard(){
+        gameBoard.setInitialHints();
+        System.out.println(gameBoard.showBoard());
+        for (int i=0; i<6; i++){
+            for (int j=0; j<6; j++){
+                System.out.println(gameBoard.getNumberByIndex(i,j));
+                System.out.println(textFieldBoard.get(j).get(i));
+                if (gameBoard.getNumberByIndex(i,j)>=1 && gameBoard.getNumberByIndex(i,j)<=6){
+                    String initialBoardNumber =String.valueOf(gameBoard.getNumberByIndex(i,j));
+                    textFieldBoard.get(j).get(i).setText(initialBoardNumber);
+                    textFieldBoard.get(j).get(i).setEditable(false);
+                }
+            }
+        }
+
+    }
+
     @FXML
     void handleReturn(ActionEvent event) throws IOException {
         WelcomeStage.getInstance();
