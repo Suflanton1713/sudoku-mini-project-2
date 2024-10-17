@@ -32,7 +32,7 @@ public class Main extends Application {
         GameBoard.Hint hints = gameBoard.new Hint();
 
 
-        for(int i=0; i<24; i++){
+        for(int i=0; i<72; i++){
             hints.randomHint();
             System.out.println(i + " hint");
             System.out.println(gameBoard.showBoard());
