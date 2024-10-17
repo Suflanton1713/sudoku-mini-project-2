@@ -8,6 +8,7 @@ import com.example.sudokuminiproject2.view.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
@@ -125,9 +126,13 @@ public class GameController {
     @FXML
     private TextField textField55;
 
+    @FXML
+    private Label hintsLabel;
+
     private Input input;
     private Board actualBoard;
     private GameBoard gameBoard;
+    private GameBoard.Hint hints;
     private List<List<TextField>> textFieldBoard = new ArrayList<>(6);
     private List<TextField> textFields = new ArrayList<>();
 
@@ -135,6 +140,7 @@ public class GameController {
         this.input = new Input();
         this.actualBoard = new Board();
         this.gameBoard = new GameBoard(this.actualBoard);
+        this.hints = gameBoard.new Hint();
         initializeTextFieldBoard();
         initializeTextFields();
         assignTextFieldsToBoard();
@@ -187,18 +193,24 @@ public class GameController {
             public void handle(KeyEvent keyEvent) {
                 String currentText = txt.getText();
                 if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
-                    System.out.println("Entrada válida: " + currentText);
-                    if(isCorrectNumber(txt,row,col)) {
-                        txt.getStyleClass().remove("incorrect");
-                        txt.getStyleClass().remove("default");
+                    int number = Integer.parseInt(currentText);
+                    gameBoard.setNumberByIndex(number, col, row);
+                    System.out.println("YEEEEEEEEESSSSSSSSSSS");
+                    System.out.println(gameBoard.showBoard());
+                    if((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(),number, col,row))&&(gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(),number,col,row))&&(gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(),number,col,row))){
+                        txt.getStyleClass().removeAll("incorrect", "default");
                         txt.getStyleClass().add("correct");
-                        txt.setEditable(false);
                     }else{
-                        txt.getStyleClass().remove("default");
+                        txt.getStyleClass().removeAll("correct", "default");
                         txt.getStyleClass().add("incorrect");
                     }
                 } else {
                     txt.setText("");
+                }
+                if (txt.getText()==""){
+                    txt.getStyleClass().add("default");
+                    gameBoard.setNumberByIndex(0, col, row);
+                    System.out.println(gameBoard.showBoard());
                 }
 
             }
@@ -221,7 +233,7 @@ public class GameController {
         }
     }
 
-    public boolean isCorrectNumber(TextField currentField, int row, int col) {
+    public boolean isCorrectNumberIdeal(TextField currentField, int row, int col) {
         int number = Integer.parseInt(currentField.getText());
         if (actualBoard.getNumberByIndex(col,row) == number) {
             return true;

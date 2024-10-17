@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -32,8 +33,11 @@
             <Button id="returnButton" mnemonicParsing="false" onAction="#handleReturn" prefHeight="108.0" prefWidth="98.0" />
          </children>
          <GridPane.margin>
-            <Insets left="10.0" />
+            <Insets />
          </GridPane.margin>
+         <padding>
+            <Insets left="15.0" top="10.0" />
+         </padding>
       </VBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
          <children>
@@ -451,5 +455,22 @@
             </GridPane>
          </children>
       </HBox>
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowSpan="2" GridPane.valignment="TOP">
+         <children>
+            <Button id="hintButton" mnemonicParsing="false" onAction="#handleReturn" prefHeight="108.0" prefWidth="98.0" StackPane.alignment="TOP_RIGHT">
+               <StackPane.margin>
+                  <Insets right="15.0" top="10.0" />
+               </StackPane.margin>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="21.0" text="3" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
+               <StackPane.margin>
+                  <Insets right="25.0" top="25.0" />
+               </StackPane.margin>
+               <font>
+                  <Font name="SansSerif Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
    </children>
 </GridPane>

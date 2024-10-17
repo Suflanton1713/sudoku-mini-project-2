@@ -10,6 +10,7 @@ public class GameBoard extends BoardAdapter{
     private Board idealBoard;
     private int hints;
     private boolean isGameOver;
+    private int mistake = 0;
 
     public GameBoard(Board idealBoard){
         hints = 5;
@@ -23,6 +24,13 @@ public class GameBoard extends BoardAdapter{
 
             gameBoard.add(row);
         }
+    }
+    public List<List<Integer>> getGameBoard() {
+        return gameBoard;
+    }
+
+    public int getMistake() {
+        return mistake;
     }
 
     public void setNumberByIndex(int number, int column, int row){
@@ -66,6 +74,7 @@ public class GameBoard extends BoardAdapter{
         return finalMessage;
 
     }
+
 
     public class Hint{
 

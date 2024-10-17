@@ -14,6 +14,17 @@
     -fx-background-position: center center;
     -fx-background-size: cover;
 }
+#hintButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("hintButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#hintButton:hover {
+    -fx-background-image: url("hintButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
 #newGameButton{
     -fx-background-color: transparent;
     -fx-background-image: url("newGameButton.png");
