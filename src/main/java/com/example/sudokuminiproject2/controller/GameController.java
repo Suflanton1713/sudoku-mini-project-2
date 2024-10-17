@@ -200,9 +200,11 @@ public class GameController {
                     if((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(),number, col,row))&&(gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(),number,col,row))&&(gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(),number,col,row))){
                         txt.getStyleClass().removeAll("incorrect", "default");
                         txt.getStyleClass().add("correct");
+                        gameBoard.setMistakesFix(col,row);
                     }else{
                         txt.getStyleClass().removeAll("correct", "default");
                         txt.getStyleClass().add("incorrect");
+                        gameBoard.setMistakes(col,row);
                     }
                 } else {
                     txt.setText("");
@@ -212,6 +214,8 @@ public class GameController {
                     gameBoard.setNumberByIndex(0, col, row);
                     System.out.println(gameBoard.showBoard());
                 }
+                System.out.println("Numero de errores: "+gameBoard.getMistakeCount());
+                win();
 
             }
         });
@@ -232,6 +236,16 @@ public class GameController {
             }
         }
     }
+    public void win(){
+        if(gameBoard.isWinner()){
+            System.out.println("GANASTEEE YEIIPISSSSSSS");
+            for (int i=0; i<6; i++){
+                for (int j=0; j<6; j++){
+                    textFieldBoard.get(j).get(i).setEditable(false);
+                }
+            }
+        }
+    }
 
     public boolean isCorrectNumberIdeal(TextField currentField, int row, int col) {
         int number = Integer.parseInt(currentField.getText());
@@ -246,6 +260,11 @@ public class GameController {
     void handleReturn(ActionEvent event) throws IOException {
         WelcomeStage.getInstance();
         GameStage.deleteInstance();
+    }
+    @FXML
+    void handleNewGame(ActionEvent event) throws IOException {
+        GameStage.deleteInstance();
+        GameStage.getInstance();
     }
 
 }

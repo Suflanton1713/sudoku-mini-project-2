@@ -7,10 +7,11 @@ import java.util.Random;
 public class GameBoard extends BoardAdapter{
 
     private List<List<Integer>> gameBoard = new ArrayList<>(6);
+    private List<List<Integer>> mistakes = new ArrayList<>(6);
     private Board idealBoard;
     private int hints;
     private boolean isGameOver;
-    private int mistake = 0;
+    private int mistakeCount = 0;
 
     public GameBoard(Board idealBoard){
         hints = 5;
@@ -21,16 +22,71 @@ public class GameBoard extends BoardAdapter{
             for (int x = 0; x < 6; x++) {
                 row.add(0);
             }
-
             gameBoard.add(row);
+        }
+
+        for(int i=0; i<6; i++){
+            List<Integer> row = new ArrayList<>(6);
+            for (int x = 0; x < 6; x++) {
+                row.add(0);
+            }
+            mistakes.add(row);
         }
     }
     public List<List<Integer>> getGameBoard() {
         return gameBoard;
     }
 
-    public int getMistake() {
-        return mistake;
+    public int getMistakeCount() {
+        return mistakeCount;
+    }
+
+    public void setMistakes(int column, int row) {
+        System.out.println("antes de mistake");
+        System.out.println(showMistakes());
+        if (mistakes.get(column).get(row) == 0) {
+            mistakes.get(column).set(row, 1);
+            mistakeCount++;
+            System.out.println("entro aquii si hay mistake");
+            System.out.println(showMistakes());
+        }
+
+
+    }
+    public void setMistakesFix(int column, int row) {
+        System.out.println("antes de fix");
+        System.out.println(showMistakes());
+        if (mistakes.get(column).get(row) == 1) {
+            mistakes.get(column).set(row, 0);
+            mistakeCount--;
+            System.out.println("entro aquii error fix");
+            System.out.println(showMistakes());
+        }
+    }
+    public String showMistakes(){
+        String finalMessage = "";
+        for(int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                finalMessage = finalMessage + mistakes.get(j).get(i) + " ";
+            }
+            finalMessage = finalMessage + "\n";
+        }
+        return finalMessage;
+    }
+
+    public boolean isWinner(){
+        int count =0;
+        for(int i=0; i<6;i++){
+            for(int j=0; j<6; j++){
+                if (gameBoard.get(i).get(j) == 0){
+                    count++;
+                }
+            }
+        }
+        if(mistakeCount ==0 &&count==0){
+            return true;
+        }
+        return false;
     }
 
     public void setNumberByIndex(int number, int column, int row){
