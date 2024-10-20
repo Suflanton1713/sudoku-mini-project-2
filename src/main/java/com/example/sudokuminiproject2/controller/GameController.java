@@ -195,7 +195,6 @@ public class GameController {
                 if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
                     int number = Integer.parseInt(currentText);
                     gameBoard.setNumberByIndex(number, col, row);
-                    System.out.println("YEEEEEEEEESSSSSSSSSSS");
                     System.out.println(gameBoard.showBoard());
                     if((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(),number, col,row))&&(gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(),number,col,row))&&(gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(),number,col,row))){
                         txt.getStyleClass().removeAll("incorrect", "default");
@@ -263,8 +262,21 @@ public class GameController {
     }
     @FXML
     void handleNewGame(ActionEvent event) throws IOException {
-        GameStage.deleteInstance();
-        GameStage.getInstance();
+        gameBoard.restartBoardForNewGame();
+        restartTextFieldBoard();
+        showGameBoard();
     }
 
+    public void restartTextFieldBoard(){
+        for(int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                textFieldBoard.get(j).get(i).setText("");
+                textFieldBoard.get(j).get(i).setEditable(true);
+                textFieldBoard.get(j).get(i).getStyleClass().removeAll("correct", "incorrect");
+                textFieldBoard.get(j).get(i).getStyleClass().add("default");
+
+            }
+        }
+    }
 }
+

@@ -130,7 +130,13 @@ public class GameBoard extends BoardAdapter{
         return finalMessage;
 
     }
-
+    public void restartBoardForNewGame(){
+        for(int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                gameBoard.get(j).set(i, 0);
+            }
+        }
+    }
 
     public class Hint{
 

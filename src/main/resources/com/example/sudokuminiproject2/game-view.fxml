@@ -67,7 +67,7 @@
                   <RowConstraints maxHeight="1.7976931348623157E308" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <GridPane>
+                  <GridPane style="-fx-background-color: #e2a868; -fx-border-color: #bd8248;">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="25.0" prefWidth="25.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="25.0" prefWidth="25.0" />
@@ -78,49 +78,49 @@
                         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="textField01" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1">
+                        <TextField fx:id="textField01" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField02" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2">
+                        <TextField fx:id="textField02" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField00" alignment="CENTER" prefHeight="65.0" prefWidth="75.0">
+                        <TextField fx:id="textField00" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField10" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.rowIndex="1">
+                        <TextField fx:id="textField10" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField11" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="textField11" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField12" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="textField12" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
@@ -128,10 +128,10 @@
                         </TextField>
                      </children>
                      <GridPane.margin>
-                        <Insets bottom="2.0" left="4.0" right="2.0" top="4.0" />
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <GridPane GridPane.rowIndex="1">
+                  <GridPane style="-fx-background-color: #e2a868; -fx-border-color: #bd8248;" GridPane.rowIndex="1">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -142,49 +142,49 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="textField31" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="textField31" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField20" alignment="CENTER" prefHeight="65.0" prefWidth="75.0">
+                        <TextField fx:id="textField20" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField32" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="textField32" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField30" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.rowIndex="1">
+                        <TextField fx:id="textField30" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField22" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2">
+                        <TextField fx:id="textField22" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField21" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1">
+                        <TextField fx:id="textField21" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
@@ -192,10 +192,10 @@
                         </TextField>
                      </children>
                      <GridPane.margin>
-                        <Insets bottom="2.0" left="4.0" right="2.0" top="2.0" />
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <GridPane GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES">
+                  <GridPane style="-fx-background-color: #e2a868; -fx-border-color: #bd8248;" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -206,49 +206,49 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="textField13" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.rowIndex="1">
+                        <TextField fx:id="textField13" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField04" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1">
+                        <TextField fx:id="textField04" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField15" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="textField15" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField14" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="textField14" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField03" alignment="CENTER" prefHeight="65.0" prefWidth="75.0">
+                        <TextField fx:id="textField03" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField05" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2">
+                        <TextField fx:id="textField05" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
@@ -256,10 +256,10 @@
                         </TextField>
                      </children>
                      <GridPane.margin>
-                        <Insets bottom="2.0" left="2.0" right="4.0" top="4.0" />
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <GridPane style="-fx-background-color: #e2a868; -fx-border-color: #bd8248;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -270,49 +270,49 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="textField35" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="textField35" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField23" alignment="CENTER" prefHeight="65.0" prefWidth="75.0">
+                        <TextField fx:id="textField23" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField34" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="textField34" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField33" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.rowIndex="1">
+                        <TextField fx:id="textField33" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField25" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2">
+                        <TextField fx:id="textField25" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField24" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1">
+                        <TextField fx:id="textField24" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
@@ -320,10 +320,10 @@
                         </TextField>
                      </children>
                      <GridPane.margin>
-                        <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <GridPane GridPane.rowIndex="2">
+                  <GridPane style="-fx-background-color: #e2a868; -fx-border-color: #bd8248;" GridPane.rowIndex="2">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -334,49 +334,49 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="textField52" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="textField52" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField40" alignment="CENTER" prefHeight="65.0" prefWidth="75.0">
+                        <TextField fx:id="textField40" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField51" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="textField51" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField50" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.rowIndex="1">
+                        <TextField fx:id="textField50" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField42" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2">
+                        <TextField fx:id="textField42" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField41" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1">
+                        <TextField fx:id="textField41" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
@@ -384,10 +384,10 @@
                         </TextField>
                      </children>
                      <GridPane.margin>
-                        <Insets bottom="4.0" left="4.0" right="2.0" top="2.0" />
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <GridPane style="-fx-background-color: #e2a868; -fx-border-color: #bd8248;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -398,49 +398,49 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="textField54" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="textField54" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField43" alignment="CENTER" prefHeight="65.0" prefWidth="75.0">
+                        <TextField fx:id="textField43" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField55" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <TextField fx:id="textField55" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets left="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField53" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.rowIndex="1">
+                        <TextField fx:id="textField53" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets right="1.5" top="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField45" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="2">
+                        <TextField fx:id="textField45" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="2">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textField44" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" GridPane.columnIndex="1">
+                        <TextField fx:id="textField44" alignment="CENTER" prefHeight="65.0" prefWidth="75.0" style="-fx-background-radius: 0;" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                              <Insets bottom="1.5" left="1.5" right="1.5" />
                            </GridPane.margin>
                            <font>
                               <Font name="SansSerif Bold" size="30.0" />
@@ -448,10 +448,16 @@
                         </TextField>
                      </children>
                      <GridPane.margin>
-                        <Insets bottom="4.0" left="2.0" right="4.0" top="2.0" />
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
                   </GridPane>
                </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </padding>
             </GridPane>
          </children>
       </HBox>
