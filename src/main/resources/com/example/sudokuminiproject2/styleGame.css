@@ -76,8 +76,7 @@
     -fx-background-size: cover;
 }
 .correct {
-    -fx-text-fill: #000065; /* Color del texto */
-    -fx-background-color: #a2d7ea; /* Color de fondo */
+    -fx-text-fill: #000065;
 }
 .incorrect {
     -fx-text-fill: #9a0000;
@@ -86,4 +85,7 @@
 .default {
     -fx-text-fill: black;
     -fx-background-color: white;
+}
+.highlight {
+    -fx-background-color: #e6e6fb;
 }

@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -203,6 +204,8 @@ public class GameController {
                     }else{
                         txt.getStyleClass().removeAll("correct", "default");
                         txt.getStyleClass().add("incorrect");
+                        highlightIncorrectNumbers(number,row,col);
+                        highlightBox(row,col,number);
                         gameBoard.setMistakes(col,row);
                     }
                 } else {
@@ -218,6 +221,100 @@ public class GameController {
 
             }
         });
+        txt.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clearHighlights();
+                String currentText = txt.getText();
+                txt.setStyle("-fx-background-color: lightblue;");
+
+                highlightRowAndColumn(row, col);
+                highlightBox(row, col, 0);
+
+                if(!currentText.isEmpty()){
+                    int number = Integer.parseInt(currentText);
+                    highlightSameNumbers(number);
+                }
+            }
+        });
+    }
+    private void highlightRowAndColumn(int row, int col) {
+        // highlight row
+        for (int i = 0; i < 6; i++) {
+            TextField currentField = textFieldBoard.get(row).get(i);
+            if (!currentField.getStyleClass().contains("incorrect")) {
+                currentField.getStyleClass().removeAll("default");
+                currentField.getStyleClass().add("highlight");
+            }
+
+        }
+        // highlight col
+        for (int i = 0; i < 6; i++) {
+            TextField currentField = textFieldBoard.get(i).get(col);
+            if (!currentField.getStyleClass().contains("incorrect")) {
+                currentField.getStyleClass().removeAll("default");
+                currentField.getStyleClass().add("highlight");
+            }
+        }
+    }
+    private void highlightBox(int row, int col, int number) {
+        int startRow = (row / 2) * 2;
+        int startCol = (col / 3) * 3;
+
+        for (int i = startRow; i < startRow + 2; i++) {
+            for (int j = startCol; j < startCol + 3; j++) {
+                TextField currentField = textFieldBoard.get(i).get(j);
+                //entra aqui para resaltar normalito no errores
+                if(number==0){
+                    if (!currentField.getStyleClass().contains("incorrect")) {
+                        currentField.getStyleClass().removeAll("default");
+                        currentField.getStyleClass().add("highlight");
+                    }
+                }
+                //entra aqui para resaltar errores
+                if (i != row && j != col && textFieldBoard.get(i).get(j).getText().equals(String.valueOf(number))) {
+                    textFieldBoard.get(i).get(j).setStyle("-fx-background-color: #ffcccc;");
+                }
+            }
+        }
+    }
+    private void highlightSameNumbers(int number) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                String text = textFieldBoard.get(i).get(j).getText();
+                if (!text.isEmpty() && Integer.parseInt(text) == number) {
+                    textFieldBoard.get(i).get(j).getStyleClass().add("highlight");
+                }
+            }
+        }
+    }
+    public void highlightIncorrectNumbers(int number, int row, int col) {
+        // Revisa y resalta la fila
+        for (int i = 0; i < 6; i++) {
+            if (i != col && textFieldBoard.get(row).get(i).getText().equals(String.valueOf(number))) {
+                textFieldBoard.get(row).get(i).setStyle("-fx-background-color: #ffcccc;");
+            }
+        }
+        // Revisa y resalta la columna
+        for (int i = 0; i < 6; i++) {
+            if (i != row && textFieldBoard.get(i).get(col).getText().equals(String.valueOf(number))) {
+                textFieldBoard.get(i).get(col).setStyle("-fx-background-color: #ffcccc;");
+            }
+        }
+
+    }
+
+    private void clearHighlights() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                TextField currentField = textFieldBoard.get(i).get(j);
+                currentField.getStyleClass().removeAll("highlight");
+                currentField.setStyle("");
+                if (!currentField.getStyleClass().contains("correct") && !currentField.getStyleClass().contains("incorrect")) {
+                    currentField.getStyleClass().add("default");
+                }
+            }
+        }
     }
 
     public void showGameBoard(){
