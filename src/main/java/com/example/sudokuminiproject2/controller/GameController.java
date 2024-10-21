@@ -274,7 +274,6 @@ public class GameController {
                 textFieldBoard.get(j).get(i).setEditable(true);
                 textFieldBoard.get(j).get(i).getStyleClass().removeAll("correct", "incorrect");
                 textFieldBoard.get(j).get(i).getStyleClass().add("default");
-
             }
         }
     }

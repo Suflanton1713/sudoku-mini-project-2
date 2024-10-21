@@ -42,6 +42,39 @@
     -fx-background-position: center center;
     -fx-background-size: cover;
 }
+#undoButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("undoButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#undoButton:hover {
+    -fx-background-image: url("undoButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#eraseButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("eraseButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#eraseButton:hover {
+    -fx-background-image: url("eraseButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#notesButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("notesButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#notesButton:hover {
+    -fx-background-image: url("notesButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
 .correct {
     -fx-text-fill: #000065; /* Color del texto */
     -fx-background-color: #a2d7ea; /* Color de fondo */
