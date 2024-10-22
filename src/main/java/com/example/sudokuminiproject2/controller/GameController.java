@@ -162,7 +162,6 @@ public class GameController {
                 row.add(null);
             }
             textFieldBoard.add(row);
-
         }
     }
 
@@ -182,7 +181,6 @@ public class GameController {
             for (int j = 0; j < 6; j++) {
                 textFieldBoard.get(i).set(j, textFields.get(index));
                 textFieldBoard.get(i).get(j).getStyleClass().add("default");
-                System.out.println("fila" + i + "columna" + j + " essss: " + textFields.get(index));
                 index++;
             }
         }
@@ -196,29 +194,20 @@ public class GameController {
                 if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
                     int number = Integer.parseInt(currentText);
                     gameBoard.setNumberByIndex(number, col, row);
-                    System.out.println(gameBoard.showBoard());
-                    if((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(),number, col,row))&&(gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(),number,col,row))&&(gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(),number,col,row))){
-                        txt.getStyleClass().removeAll("incorrect", "default");
-                        txt.getStyleClass().add("correct");
-                        gameBoard.setMistakesFix(col,row);
-                    }else{
-                        txt.getStyleClass().removeAll("correct", "default");
-                        txt.getStyleClass().add("incorrect");
-                        highlightIncorrectNumbers(number,row,col);
-                        highlightBox(row,col,number);
-                        gameBoard.setMistakes(col,row);
-                    }
+                    gameBoard.pushList(number,row,col);
+                    validNumber(number,row,col);
                 } else {
                     txt.setText("");
                 }
                 if (txt.getText()==""){
                     txt.getStyleClass().add("default");
                     gameBoard.setNumberByIndex(0, col, row);
-                    System.out.println(gameBoard.showBoard());
+                    gameBoard.pushList(0,row,col);
+                    gameBoard.setMistakesFix(col,row);
+                    fixIncorrects();
                 }
                 System.out.println("Numero de errores: "+gameBoard.getMistakeCount());
                 win();
-
             }
         });
         txt.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -238,6 +227,35 @@ public class GameController {
             }
         });
     }
+    public void validNumber(int number,int row,int col){
+        if((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(),number, col,row))&&(gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(),number,col,row))&&(gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(),number,col,row))){
+            System.out.println("sipiiii entro aqui");
+            textFieldBoard.get(row).get(col).getStyleClass().removeAll("incorrect", "default");
+            textFieldBoard.get(row).get(col).getStyleClass().add("correct");
+            gameBoard.setMistakesFix(col,row);
+        }else{
+            textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "default");
+            textFieldBoard.get(row).get(col).getStyleClass().add("incorrect");
+            highlightIncorrectNumbers(number,row,col);
+            highlightBox(row,col,number);
+            gameBoard.setMistakes(col,row);
+        }
+    }
+    public void fixIncorrects(){
+        System.out.println("tablero de mistakes");
+        System.out.println(gameBoard.showMistakesBoard());
+        for(int i=0;i<6;i++){
+            for(int j=0;j<6;j++){
+                if(gameBoard.getMistakesBoard().get(i).get(j)==1){
+                    System.out.println("tablero game: ");
+                    System.out.println(gameBoard.showBoard());
+                    int number = gameBoard.getNumberByIndex(i,j);
+                    System.out.println("number incorrect: "+number);
+                    validNumber(number,j,i);
+                }
+            }
+        }
+    }
     private void highlightRowAndColumn(int row, int col) {
         // highlight row
         for (int i = 0; i < 6; i++) {
@@ -246,7 +264,6 @@ public class GameController {
                 currentField.getStyleClass().removeAll("default");
                 currentField.getStyleClass().add("highlight");
             }
-
         }
         // highlight col
         for (int i = 0; i < 6; i++) {
@@ -301,9 +318,32 @@ public class GameController {
                 textFieldBoard.get(i).get(col).setStyle("-fx-background-color: #ffcccc;");
             }
         }
-
     }
-
+    public void clearIncorrectNumbersHighlight(int row, int col){
+        int startRow = (row / 2) * 2;
+        int startCol = (col / 3) * 3;
+        for (int i = startRow; i < startRow + 2; i++) {
+            for (int j = startCol; j < startCol + 3; j++) {
+                TextField currentField = textFieldBoard.get(i).get(j);
+                //entra aqui para resaltar errores
+                if (i != row && j != col ) {
+                    textFieldBoard.get(i).get(j).setStyle("");
+                }
+            }
+        }
+        //quita number incorrect highlight row
+        for (int i = 0; i < 6; i++) {
+            if (i != col ) {
+                textFieldBoard.get(row).get(i).setStyle("");
+            }
+        }
+        //quita number incorrect highlight col
+        for (int i = 0; i < 6; i++) {
+            if (i != row) {
+                textFieldBoard.get(i).get(col).setStyle("");
+            }
+        }
+    }
     private void clearHighlights() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
@@ -319,11 +359,8 @@ public class GameController {
 
     public void showGameBoard(){
         gameBoard.setInitialHints();
-        System.out.println(gameBoard.showBoard());
         for (int i=0; i<6; i++){
             for (int j=0; j<6; j++){
-                System.out.println(gameBoard.getNumberByIndex(i,j));
-                System.out.println(textFieldBoard.get(j).get(i));
                 if (gameBoard.getNumberByIndex(i,j)>=1 && gameBoard.getNumberByIndex(i,j)<=6){
                     String initialBoardNumber =String.valueOf(gameBoard.getNumberByIndex(i,j));
                     textFieldBoard.get(j).get(i).setText(initialBoardNumber);
@@ -372,6 +409,24 @@ public class GameController {
                 textFieldBoard.get(j).get(i).getStyleClass().removeAll("correct", "incorrect");
                 textFieldBoard.get(j).get(i).getStyleClass().add("default");
             }
+        }
+    }
+    @FXML
+    void handleUndo(ActionEvent event) {
+
+        System.out.println(gameBoard.showBoard());
+        if(!gameBoard.getListHistory().isEmpty()){
+            List<Integer> topList = gameBoard.getListHistory().pop();;
+            int number = topList.get(0);//luego veo si lo quito je
+            int row = topList.get(1);
+            int col = topList.get(2);
+            gameBoard.setNumberByIndex(0, col, row);
+            textFieldBoard.get(row).get(col).setText("");
+            gameBoard.setMistakesFix(col,row);
+            textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
+            clearIncorrectNumbersHighlight(row,col);
+        }else{
+            System.out.println("No hay movimientos para deshacer.");
         }
     }
 }

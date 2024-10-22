@@ -80,7 +80,7 @@
 }
 .incorrect {
     -fx-text-fill: #9a0000;
-    -fx-background-color: #ea8a8a;
+    -fx-background-color: #fdbaba;
 }
 .default {
     -fx-text-fill: black;

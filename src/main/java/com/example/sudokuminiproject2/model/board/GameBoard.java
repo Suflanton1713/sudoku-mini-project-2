@@ -3,11 +3,13 @@ package com.example.sudokuminiproject2.model.board;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 
 public class GameBoard extends BoardAdapter{
 
     private List<List<Integer>> gameBoard = new ArrayList<>(6);
-    private List<List<Integer>> mistakes = new ArrayList<>(6);
+    private List<List<Integer>> mistakesBoard = new ArrayList<>(6);
+    private Stack<List<Integer>> listHistory = new Stack<>();
     private Board idealBoard;
     private int hints;
     private boolean isGameOver;
@@ -30,48 +32,66 @@ public class GameBoard extends BoardAdapter{
             for (int x = 0; x < 6; x++) {
                 row.add(0);
             }
-            mistakes.add(row);
+            mistakesBoard.add(row);
         }
     }
     public List<List<Integer>> getGameBoard() {
         return gameBoard;
     }
 
+    public Stack<List<Integer>> getListHistory() {
+        return listHistory;
+    }
+
+    public void pushList(int number, int row, int col){
+        List<Integer> list = new ArrayList<>(3);
+        list.add(number);
+        list.add(row);
+        list.add(col);
+        listHistory.push(list);
+    }
+
     public int getMistakeCount() {
         return mistakeCount;
     }
 
+    public List<List<Integer>> getMistakesBoard() {
+        return mistakesBoard;
+    }
+
     public void setMistakes(int column, int row) {
         System.out.println("antes de mistake");
-        System.out.println(showMistakes());
-        if (mistakes.get(column).get(row) == 0) {
-            mistakes.get(column).set(row, 1);
+        System.out.println(showMistakesBoard());
+        if (mistakesBoard.get(column).get(row) == 0) {
+            mistakesBoard.get(column).set(row, 1);
             mistakeCount++;
             System.out.println("entro aquii si hay mistake");
-            System.out.println(showMistakes());
+            System.out.println(showMistakesBoard());
         }
-
-
     }
     public void setMistakesFix(int column, int row) {
         System.out.println("antes de fix");
-        System.out.println(showMistakes());
-        if (mistakes.get(column).get(row) == 1) {
-            mistakes.get(column).set(row, 0);
+        System.out.println(showMistakesBoard());
+        if (mistakesBoard.get(column).get(row) == 1) {
+            mistakesBoard.get(column).set(row, 0);
             mistakeCount--;
             System.out.println("entro aquii error fix");
-            System.out.println(showMistakes());
+            System.out.println(showMistakesBoard());
         }
     }
-    public String showMistakes(){
+    public String showMistakesBoard(){
         String finalMessage = "";
         for(int i=0; i<6; i++){
             for(int j=0; j<6; j++){
-                finalMessage = finalMessage + mistakes.get(j).get(i) + " ";
+                finalMessage = finalMessage + mistakesBoard.get(j).get(i) + " ";
             }
             finalMessage = finalMessage + "\n";
         }
         return finalMessage;
+    }
+
+    public void setNumberByIndex(int number, int column, int row){
+        gameBoard.get(column).set(row, number);
     }
 
     public boolean isWinner(){
@@ -87,10 +107,6 @@ public class GameBoard extends BoardAdapter{
             return true;
         }
         return false;
-    }
-
-    public void setNumberByIndex(int number, int column, int row){
-        gameBoard.get(column).set(row, number);
     }
 
     public void setInitialHints(){
