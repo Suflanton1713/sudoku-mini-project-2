@@ -86,6 +86,17 @@
     -fx-text-fill: black;
     -fx-background-color: white;
 }
+
+.notes{
+    -fx-text-fill: #17953b;
+    -fx-background-color: #bcf1ae;
+}
+
+.hintsButNotes{
+    -fx-text-fill: #0b461c;
+    -fx-background-color: #bcf1ae;
+}
+
 .highlight {
     -fx-background-color: #e6e6fb;
 }
