@@ -200,6 +200,9 @@ public class GameController {
         txt.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
+                if (!txt.isEditable()) {
+                    return;  // No permitir ningún cambio si el campo no es editable
+                }
                 String currentText = txt.getText();
                 if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
                     int number = Integer.parseInt(currentText);
@@ -244,10 +247,17 @@ public class GameController {
                     clearIncorrectNumbersHighlight(row, col);
                     txt.getStyleClass().removeAll("incorrect", "correct");
                     txt.getStyleClass().add("default");
+                    txt.setEditable(false);
+                    fixIncorrects();
                     System.out.println(gameBoard.showBoard());
                     System.out.println(gameBoard.showMistakesBoard());
+                    System.out.println("initial hints board: ");
+                    System.out.println(gameBoard.showInitialHintsBoard());
+                }else if (!isEraseModeOn ) {
+                    if (gameBoard.getInitialHintsBoard().get(col).get(row) == 0) {
+                        txt.setEditable(true);
+                    }
                 }
-
             }
         });
     }
@@ -380,8 +390,11 @@ public class GameController {
             for (int j=0; j<6; j++){
                 if (gameBoard.getNumberByIndex(i,j)>=1 && gameBoard.getNumberByIndex(i,j)<=6){
                     String initialBoardNumber =String.valueOf(gameBoard.getNumberByIndex(i,j));
+                    gameBoard.setNumberByIndex(gameBoard.getInitialHintsBoard(),gameBoard.getNumberByIndex(i,j),i,j);
                     textFieldBoard.get(j).get(i).setText(initialBoardNumber);
                     textFieldBoard.get(j).get(i).setEditable(false);
+                    System.out.println("initial hints board: ");
+                    System.out.println(gameBoard.showInitialHintsBoard());
                 }
             }
         }
@@ -471,6 +484,7 @@ public class GameController {
 
     @FXML
     void handleUndo(ActionEvent event) {
+        System.out.println(gameBoard.showStack());
         if(!gameBoard.getStackList().isEmpty()){
             List<Integer> topList = gameBoard.getStackList().pop();
             int number = topList.get(0);
@@ -481,14 +495,24 @@ public class GameController {
                 int number2 = topList2.get(0);
                 int row2 = topList2.get(1);
                 int col2 = topList2.get(2);
-
+                System.out.println("entra como number 2: "+ number2);
                 gameBoard.setNumberByIndex(gameBoard.getGameBoard(),number2, col2, row2);
-                textFieldBoard.get(row).get(col).setText(String.valueOf(number2));
-                gameBoard.setMistakes(col,row);
-                validCorrectNumber(number2,row,col);
-                clearIncorrectNumbersHighlight(row,col);
-
+                if(number2 == 0){
+                    System.out.println("number 2 era igual a 0, se cambia text field a nada");
+                    textFieldBoard.get(row).get(col).setText("");
+                    gameBoard.setMistakesFix(col,row);
+                    textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
+                    textFieldBoard.get(row).get(col).setStyle("");
+                    clearIncorrectNumbersHighlight(row,col);
+                }else{
+                    System.out.println("number 2 no era igual a 0, se cambia text field a el numero: "+number2);
+                    textFieldBoard.get(row).get(col).setText(String.valueOf(number2));
+                    gameBoard.setMistakes(col,row);
+                    validCorrectNumber(number2,row,col);
+                    clearIncorrectNumbersHighlight(row,col);
+                }
             }else{
+                System.out.println("entra como number 1 porque no es cero: "+number+" se cambia a nada");
                 gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
                 textFieldBoard.get(row).get(col).setText("");
                 gameBoard.setMistakesFix(col,row);
@@ -496,10 +520,10 @@ public class GameController {
                 textFieldBoard.get(row).get(col).setStyle("");
                 clearIncorrectNumbersHighlight(row,col);
             }
-
         }else{
             System.out.println("No hay movimientos para deshacer.");
         }
+        System.out.println(gameBoard.showStack());
     }
 
     @FXML

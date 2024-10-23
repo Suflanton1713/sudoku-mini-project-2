@@ -10,6 +10,7 @@ public class GameBoard extends BoardAdapter{
     private List<List<Integer>> gameBoard = new ArrayList<>(6);
     private List<List<Integer>> hintBoard = new ArrayList<>(6);
     private List<List<Integer>> mistakesBoard = new ArrayList<>(6);
+    private List<List<Integer>> initialHintsBoard = new ArrayList<>(6);
     private Stack<List<Integer>> stackList = new Stack<>();
     private Board idealBoard;
     private int hints;
@@ -24,15 +25,17 @@ public class GameBoard extends BoardAdapter{
             List<Integer> row = new ArrayList<>(6);
             List<Integer> hintRow = new ArrayList<>(6);
             List<Integer> mistakeRow = new ArrayList<>(6);
+            List<Integer> initialHintsRow = new ArrayList<>(6);
             for (int x = 0; x < 6; x++) {
                 row.add(0);
                 hintRow.add(0);
                 mistakeRow.add(0);
-
+                initialHintsRow.add(0);
             }
             gameBoard.add(row);
             hintBoard.add(hintRow);
             mistakesBoard.add(mistakeRow);
+            initialHintsBoard.add(initialHintsRow);
         }
     }
     public Stack<List<Integer>> getStackList() {
@@ -58,6 +61,10 @@ public class GameBoard extends BoardAdapter{
         return mistakeCount;
     }
 
+    public List<List<Integer>> getInitialHintsBoard() {
+        return initialHintsBoard;
+    }
+
     public void setMistakes(int column, int row) {
         System.out.println("columna: " + column + ", row: " + row);
         System.out.println(showMistakesBoard());
@@ -78,6 +85,7 @@ public class GameBoard extends BoardAdapter{
         }
         System.out.println(showMistakesBoard());
     }
+
     public String showStack() {
         String finalMessage = "";
 
@@ -106,6 +114,17 @@ public class GameBoard extends BoardAdapter{
         return finalMessage;
     }
 
+    public String showInitialHintsBoard(){
+        String finalMessage = "";
+        for(int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                finalMessage = finalMessage + initialHintsBoard.get(j).get(i) + " ";
+            }
+            finalMessage = finalMessage + "\n";
+        }
+        return finalMessage;
+    }
+
     public boolean isWinner(){
         int count =0;
         for(int i=0; i<6;i++){
@@ -120,8 +139,6 @@ public class GameBoard extends BoardAdapter{
         }
         return false;
     }
-
-
 
     public void setInitialHints(){
 
@@ -139,8 +156,6 @@ public class GameBoard extends BoardAdapter{
                 }while(getNumberByIndex(randomCol, randomRow) != 0);
                 number = idealBoard.getNumberByIndex(randomCol, randomRow);
                 setNumberByIndex(gameBoard,number ,randomCol, randomRow);
-                setNumberByIndex(hintBoard,1, randomCol, randomRow);
-
             }
         }
 
