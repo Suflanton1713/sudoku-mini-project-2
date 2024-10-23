@@ -26,7 +26,7 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowSpan="2">
          <children>
-            <Button id="returnButton" fx:id="backButton" mnemonicParsing="false" onAction="#handleReturn" prefHeight="108.0" prefWidth="98.0" />
+            <Button id="returnButton" mnemonicParsing="false" onAction="#handleReturn" prefHeight="108.0" prefWidth="98.0" />
             <Label fx:id="hintsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="21.0" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="20.0" />
@@ -42,8 +42,8 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="44.0" prefWidth="222.0" GridPane.columnIndex="1">
          <children>
-            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#handlePauseButton" prefHeight="25.0" prefWidth="18.0" text="Button" />
-            <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="166.0" text="10:00" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#handlePauseButton" prefHeight="25.0" prefWidth="0.0" text="Button" />
+            <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="166.0" text="00:00" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="26.0" />
                </font>
@@ -475,9 +475,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button id="undoButton" fx:id="undoButton" mnemonicParsing="false" prefHeight="85.0" prefWidth="75.0" GridPane.columnIndex="1" />
+                  <Button id="undoButton" fx:id="undoButton" mnemonicParsing="false" onAction="#handleUndo" prefHeight="85.0" prefWidth="75.0" GridPane.columnIndex="1" />
                   <Button id="notesButton" fx:id="draftButton" mnemonicParsing="false" onAction="#onHandleDraft" prefHeight="85.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button id="eraseButton" fx:id="clearButton" mnemonicParsing="false" prefHeight="85.0" prefWidth="75.0" GridPane.rowIndex="1" />
                   <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                      <children>
                         <Button id="hintButton" fx:id="hintButton" mnemonicParsing="false" onAction="#handleHint" prefHeight="85.0" prefWidth="75.0" />
@@ -488,6 +487,19 @@
                            <StackPane.margin>
                               <Insets bottom="48.0" left="50.0" />
                            </StackPane.margin>
+                        </Label>
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Button id="eraseButton" fx:id="eraseButton" mnemonicParsing="false" onAction="#handleErase" prefHeight="85.0" prefWidth="75.0" />
+                        <Label fx:id="eraseLabel" alignment="CENTER" prefHeight="22.0" prefWidth="27.0" textAlignment="CENTER" textFill="WHITE">
+                           <StackPane.margin>
+                              <Insets left="43.0" top="30.0" />
+                           </StackPane.margin>
+                           <font>
+                              <Font name="SansSerif Bold" size="13.0" />
+                           </font>
                         </Label>
                      </children>
                   </StackPane>

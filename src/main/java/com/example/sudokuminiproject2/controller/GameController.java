@@ -2,7 +2,6 @@ package com.example.sudokuminiproject2.controller;
 
 import com.example.sudokuminiproject2.model.board.Board;
 import com.example.sudokuminiproject2.model.board.GameBoard;
-import com.example.sudokuminiproject2.model.input.Button;
 import com.example.sudokuminiproject2.model.input.Input;
 import com.example.sudokuminiproject2.view.GameStage;
 import com.example.sudokuminiproject2.view.WelcomeStage;
@@ -12,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -133,22 +133,25 @@ public class GameController {
     private TextField textField55;
 
     @FXML
+    private Label hintsLabel;
+
+    @FXML
+    private Button eraseButton;
+
+    @FXML
+    private Label eraseLabel;
+
+    @FXML
     private javafx.scene.control.Button hintButton;
 
     @FXML
     private javafx.scene.control.Button undoButton;
 
     @FXML
-    private javafx.scene.control.Button clearButton;
-
-    @FXML
     private javafx.scene.control.Button newGameButton;
 
     @FXML
     private javafx.scene.control.Button draftButton;
-
-    @FXML
-    private Label hintsLabel;
 
     @FXML
     private Label timeLabel;
@@ -164,17 +167,18 @@ public class GameController {
 
     private boolean gamePaused = false;
 
-
-
     private int gameMode;
     private Input input;
     private Board actualBoard;
     private GameBoard gameBoard;
+    private boolean isEraseModeOn = false;
     private GameBoard.Hint hints;
     private List<List<TextField>> textFieldBoard = new ArrayList<>(6);
     private List<TextField> textFields = new ArrayList<>();
 
     public void initialize() {
+        eraseLabel.getStyleClass().add("labelOff");
+        eraseLabel.setText("off");
         this.input = new Input();
         this.actualBoard = new Board();
         this.gameBoard = new GameBoard(this.actualBoard);
@@ -186,13 +190,12 @@ public class GameController {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 TextField currentField = textFieldBoard.get(i).get(j);
-                handleTextFields(currentField, i, j);
+                handleTextFields(currentField,i,j);
             }
         }
         showGameBoard();
-        System.out.println(actualBoard.showIdealGame(actualBoard.getBoard()));
 
-        // Crear una línea de tiempo que se ejecuta cada segundo
+        // Creates a timeline that is executed verey second
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> actualizarTiempo()));
         timeline.setCycleCount(Timeline.INDEFINITE);  // Se ejecuta indefinidamente
 
@@ -222,7 +225,8 @@ public class GameController {
             newGameButton.setDisable(true);
             undoButton.setDisable(true);
             hintButton.setDisable(true);
-            clearButton.setDisable(true);
+            eraseButton.setDisable(true);
+            eraseLabel.setDisable(true);
             draftButton.setDisable(true);
         } else {
             timeline.play(); // Reanudar el cronómetro
@@ -235,7 +239,8 @@ public class GameController {
             newGameButton.setDisable(false);
             undoButton.setDisable(false);
             hintButton.setDisable(false);
-            clearButton.setDisable(false);
+            eraseButton.setDisable(false);
+            eraseLabel.setDisable(false);
             draftButton.setDisable(false);
         }
         gamePaused = !gamePaused; // Alternar estado
@@ -249,7 +254,6 @@ public class GameController {
                 row.add(null);
             }
             textFieldBoard.add(row);
-
         }
     }
 
@@ -263,63 +267,50 @@ public class GameController {
                 textField50, textField51, textField52, textField53, textField54, textField55
         ));
     }
-
     private void assignTextFieldsToBoard() {
         int index = 0;
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 textFieldBoard.get(i).set(j, textFields.get(index));
                 textFieldBoard.get(i).get(j).getStyleClass().add("default");
-//                System.out.println("fila" + i + "columna" + j + " essss: " + textFields.get(index));
                 index++;
             }
         }
     }
 
     private void handleTextFields(TextField txt, int row, int col) {
-
-        txt.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        txt.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
+                if (!txt.isEditable()) {
+                    return;  // No permitir ningún cambio si el campo no es editable
+                }
                 String currentText = txt.getText();
                 if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
                     int number = Integer.parseInt(currentText);
-                    if (gameMode == 0) {
-                        gameBoard.setNumberByIndex(gameBoard.getGameBoard(), number, col, row);
+                    if(gameMode==0){
+                        gameBoard.setNumberByIndex(gameBoard.getGameBoard(),number, col, row);
+                        gameBoard.pushToStack(number,row,col);
                     }
-                    System.out.println(gameBoard.showBoard());
-                    if ((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(), number, col, row)) && (gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(), number, col, row)) && (gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(), number, col, row))) {
-                        txt.getStyleClass().removeAll("incorrect", "default");
-                        txt.getStyleClass().add("correct");
-                        if (gameMode == 0) {
-                            gameBoard.setMistakesFix(col, row);
-                        }
-
-                    } else {
-                        txt.getStyleClass().removeAll("correct", "default");
-                        txt.getStyleClass().add("incorrect");
-                        highlightIncorrectNumbers(number, row, col);
-                        highlightBox(row, col, number);
-                        if (gameMode == 0) {
-                            gameBoard.setMistakes(col, row);
-                        }
-                    }
+                    validCorrectNumber(number,row,col);
                 } else {
-                    txt.setText("");
+                    txt.clear();
                 }
-                if (txt.getText() == "") {
+                if (txt.getText().equals("")){
                     txt.getStyleClass().add("default");
-                    if (gameMode == 0) {
-                        gameBoard.setNumberByIndex(gameBoard.getGameBoard(), 0, col, row);
-                    }
-                    System.out.println(gameBoard.showBoard());
-                }
-                System.out.println("Numero de errores: " + gameBoard.getMistakeCount());
-                win();
+                    if(gameMode==0){
+                        gameBoard.pushToStack(0,row,col);
+                        gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
+                        gameBoard.setMistakesFix(col,row);
 
+                    }
+                    fixIncorrects();
+                    clearIncorrectNumbersHighlight(row,col);
+                }
+                System.out.println("Numero de errores: "+gameBoard.getMistakeCount());
+                win();
             }
         });
-
         txt.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -334,11 +325,54 @@ public class GameController {
                     int number = Integer.parseInt(currentText);
                     highlightSameNumbers(number);
                 }
+
+                if (isEraseModeOn && txt.isEditable()) {
+                    txt.clear();
+                    gameBoard.setNumberByIndex(gameBoard.getGameBoard(), 0, col, row);
+                    gameBoard.pushToStack(0, row, col);
+                    gameBoard.setMistakesFix(col, row);
+                    clearIncorrectNumbersHighlight(row, col);
+                    txt.getStyleClass().removeAll("incorrect", "correct");
+                    txt.getStyleClass().add("default");
+                    txt.setEditable(false);
+                    fixIncorrects();
+                    System.out.println(gameBoard.showBoard());
+                    System.out.println(gameBoard.showMistakesBoard());
+                    System.out.println("initial hints board: ");
+                    System.out.println(gameBoard.showInitialHintsBoard());
+                }else if (!isEraseModeOn ) {
+                    if (gameBoard.getInitialHintsBoard().get(col).get(row) == 0) {
+                        txt.setEditable(true);
+                    }
+                }
             }
         });
     }
+    public void validCorrectNumber(int number, int row, int col){
+        if((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(),number, col,row))&&(gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(),number,col,row))&&(gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(),number,col,row))){
+            textFieldBoard.get(row).get(col).getStyleClass().removeAll("incorrect", "default");
+            textFieldBoard.get(row).get(col).getStyleClass().add("correct");
+            gameBoard.setMistakesFix(col,row);
+        }else{
+            textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "default");
+            textFieldBoard.get(row).get(col).getStyleClass().add("incorrect");
+            highlightIncorrectNumbers(number,row,col);
+            highlightBox(row,col,number);
+            gameBoard.setMistakes(col,row);
+        }
+    }
 
-
+    public void fixIncorrects(){
+        for(int i=0;i<6;i++){
+            for(int j=0;j<6;j++){
+                if(gameBoard.getMistakesBoard().get(i).get(j)==1){
+                    int number = gameBoard.getNumberByIndex(i,j);
+                    validCorrectNumber(number,j,i);
+                    clearIncorrectNumbersHighlight(j,i);
+                }
+            }
+        }
+    }
     private void highlightRowAndColumn(int row, int col) {
         // highlight row
         for (int i = 0; i < 6; i++) {
@@ -347,7 +381,6 @@ public class GameController {
                 currentField.getStyleClass().removeAll("default");
                 currentField.getStyleClass().add("highlight");
             }
-
         }
         // highlight col
         for (int i = 0; i < 6; i++) {
@@ -402,9 +435,29 @@ public class GameController {
                 textFieldBoard.get(i).get(col).setStyle("-fx-background-color: #ffcccc;");
             }
         }
-
     }
-
+    public void clearIncorrectNumbersHighlight(int row, int col){
+        int startRow = (row / 2) * 2;
+        int startCol = (col / 3) * 3;
+        for (int i = startRow; i < startRow + 2; i++) {
+            for (int j = startCol; j < startCol + 3; j++) {
+                if (i != row && j != col ) {
+                    textFieldBoard.get(i).get(j).setStyle("");
+                }
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            if (i != col ) {
+                textFieldBoard.get(row).get(i).setStyle("");
+            }
+        }
+        //quita number incorrect highlight col
+        for (int i = 0; i < 6; i++) {
+            if (i != row) {
+                textFieldBoard.get(i).get(col).setStyle("");
+            }
+        }
+    }
     private void clearHighlights() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
@@ -420,20 +473,19 @@ public class GameController {
 
     public void showGameBoard(){
         gameBoard.setInitialHints();
-        System.out.println(gameBoard.showBoard());
         for (int i=0; i<6; i++){
             for (int j=0; j<6; j++){
-                System.out.println(gameBoard.getNumberByIndex(i,j));
-                System.out.println(textFieldBoard.get(j).get(i));
                 if (gameBoard.getNumberByIndex(i,j)>=1 && gameBoard.getNumberByIndex(i,j)<=6){
                     String initialBoardNumber =String.valueOf(gameBoard.getNumberByIndex(i,j));
+                    gameBoard.setNumberByIndex(gameBoard.getInitialHintsBoard(),gameBoard.getNumberByIndex(i,j),i,j);
                     textFieldBoard.get(j).get(i).setText(initialBoardNumber);
                     textFieldBoard.get(j).get(i).setEditable(false);
+                    System.out.println("initial hints board: ");
+                    System.out.println(gameBoard.showInitialHintsBoard());
                 }
             }
         }
     }
-
     public void win(){
         if(gameBoard.isWinner()){
             System.out.println("GANASTEEE YEIIPISSSSSSS");
@@ -442,49 +494,6 @@ public class GameController {
                     textFieldBoard.get(j).get(i).setEditable(false);
                 }
             }
-        }
-    }
-
-    @FXML
-    void handleHint(ActionEvent event) {
-        GameBoard.Hint hints = gameBoard.new Hint();
-        int[] hintHandler;
-        int[] hintHardHandler;
-        hintHandler = hints.randomHint();
-        if(hintHandler[0]!=-1){
-            System.out.println("Número "+ hintHandler[0] +" Column "+ hintHandler[1] +" Row "+ hintHandler[2]);
-            textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).setText(String.valueOf(hintHandler[0]));
-        }else{
-            hintHardHandler= hints.secondHardTryingHint();
-            if(hintHardHandler[0]!=-1){
-
-                System.out.println("Número "+ hintHardHandler[0] +" Column "+ hintHardHandler[1] +" Row "+ hintHardHandler[2]);
-                textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).setText(String.valueOf(hintHardHandler[0]));
-                textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().removeAll("incorrect");
-                textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().add("correct");
-            }else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("NO ES POSIBLE UNA PISTA QUE AYUDE");
-                alert.setContentText("La pista actual generada no ayuda en el tablero actual, intenta" +
-                        "cambiar números o hacerlo por tu parte");
-                alert.show();
-            }
-        }
-
-        win();
-        actualBoard.showBoard();
-        gameBoard.showMistakes();
-
-
-    }
-
-
-    public boolean isCorrectNumberIdeal(TextField currentField, int row, int col) {
-        int number = Integer.parseInt(currentField.getText());
-        if (actualBoard.getNumberByIndex(col,row) == number) {
-            return true;
-        }else{
-            return false;
         }
     }
 
@@ -500,11 +509,116 @@ public class GameController {
         showGameBoard();
     }
 
+    public void restartTextFieldBoard(){
+        for(int i=0; i<6; i++){
+            for(int j=0; j<6; j++){
+                textFieldBoard.get(j).get(i).setText("");
+                textFieldBoard.get(j).get(i).setEditable(true);
+                textFieldBoard.get(j).get(i).getStyleClass().removeAll("correct", "incorrect");
+                textFieldBoard.get(j).get(i).getStyleClass().add("default");
+            }
+        }
+    }
+
+    @FXML
+    void handleHint(ActionEvent event) {
+        GameBoard.Hint hints = gameBoard.new Hint();
+        int[] hintHandler;
+        int[] hintHardHandler;
+        hintHandler = hints.randomHint();
+        //randomHint busca las posiciones vacías en donde puede ir una pista.
+        //Si hay una posición vacía en donde puede ir entonces lo llena con un número del tablero ideal..
+
+        if(hintHandler[0]!=-1){
+            //Si no genera error colocarlo en una posición vacía entonces lo coloca en la matriz en la función
+            //Y luego lo coloca en el textField
+//            System.out.println("Número "+ hintHandler[0] +" Column "+ hintHandler[1] +" Row "+ hintHandler[2]);
+            textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).setText(String.valueOf(hintHandler[0]));
+            gameBoard.pushToStack(hintHandler[0],hintHandler[2],hintHandler[1]);
+            textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().removeAll("incorrect", "default");
+            textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().add("correct");
+        }else{
+            //Si si genera error colocarlo en la posición vacía, entonces usa la función secondHardTryingHint
+            //Que busca por los cuadros en donde hay error, y si un número del 1 al 6 corrige el error, entonces lo coloca ahí
+            //Si no hay errores o no se pueden solucionar, entonces empieza a buscar por espacios llenos en los cuales
+            //si es posible cambiar por un número del 1 al 6 sin generar error, entonces lo coloca ahí.
+            hintHardHandler= hints.secondHardTryingHint();
+            if(hintHardHandler[0]!=-1){
+                //Si si encuentra por el segundo método, lo cambia en la matriz del modelo y lo pone el textfield y cambia el estilo, falta el background je
+//                System.out.println("Número "+ hintHardHandler[0] +" Column "+ hintHardHandler[1] +" Row "+ hintHardHandler[2]);
+                textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).setText(String.valueOf(hintHardHandler[0]));
+                textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().removeAll("incorrect");
+                textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().add("correct");
+                gameBoard.pushToStack(hintHandler[0],hintHandler[2],hintHandler[1]);
+                textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().removeAll("incorrect", "default");
+                textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().add("correct");
+            }else{
+                //Si no encuentra posición donde colocarlo de ninguna forma, entonces manda un error.
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("NO ES POSIBLE UNA PISTA QUE AYUDE");
+                alert.setContentText("La pista actual generada no ayuda en el tablero actual, intenta" +
+                        "cambiar números o hacerlo por tu parte");
+                alert.show();
+            }
+        }
+
+        win();
+        actualBoard.showBoard();
+        gameBoard.showMistakesBoard();
+
+
+    }
+
+    @FXML
+    void handleUndo(ActionEvent event) {
+        System.out.println(gameBoard.showStack());
+        if(!gameBoard.getStackList().isEmpty()){
+            List<Integer> topList = gameBoard.getStackList().pop();
+            int number = topList.get(0);
+            int row = topList.get(1);
+            int col = topList.get(2);
+            if (number ==0){
+                List<Integer> topList2 = gameBoard.getStackList().peek();
+                int number2 = topList2.get(0);
+                int row2 = topList2.get(1);
+                int col2 = topList2.get(2);
+                System.out.println("entra como number 2: "+ number2);
+                gameBoard.setNumberByIndex(gameBoard.getGameBoard(),number2, col2, row2);
+                if(number2 == 0){
+                    System.out.println("number 2 era igual a 0, se cambia text field a nada");
+                    textFieldBoard.get(row).get(col).setText("");
+                    gameBoard.setMistakesFix(col,row);
+                    textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
+                    textFieldBoard.get(row).get(col).setStyle("");
+                    clearIncorrectNumbersHighlight(row,col);
+                }else{
+                    System.out.println("number 2 no era igual a 0, se cambia text field a el numero: "+number2);
+                    textFieldBoard.get(row).get(col).setText(String.valueOf(number2));
+                    gameBoard.setMistakes(col,row);
+                    validCorrectNumber(number2,row,col);
+                    clearIncorrectNumbersHighlight(row,col);
+                }
+            }else{
+                System.out.println("entra como number 1 porque no es cero: "+number+" se cambia a nada");
+                gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
+                textFieldBoard.get(row).get(col).setText("");
+                gameBoard.setMistakesFix(col,row);
+                textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
+                textFieldBoard.get(row).get(col).setStyle("");
+                clearIncorrectNumbersHighlight(row,col);
+            }
+        }else{
+            System.out.println("No hay movimientos para deshacer.");
+        }
+        System.out.println(gameBoard.showStack());
+    }
+
+
     @FXML
     void onHandleDraft(ActionEvent event) {
         if(gameMode == 1){
             hintButton.setDisable(false);
-            clearButton.setDisable(false);
+            eraseButton.setDisable(false);
             undoButton.setDisable(false);
             newGameButton.setDisable(false);
             for (int row = 0; row < 6; row++) {
@@ -529,12 +643,12 @@ public class GameController {
 
                     }
 
-                    }
                 }
+            }
             gameMode = 0;
         }else{
             hintButton.setDisable(true);
-            clearButton.setDisable(true);
+            eraseButton.setDisable(true);
             undoButton.setDisable(true);
             newGameButton.setDisable(true);
             for (List<TextField> txtFieldRows : textFieldBoard) {
@@ -555,14 +669,17 @@ public class GameController {
         }
     }
 
-    public void restartTextFieldBoard(){
-        for(int i=0; i<6; i++){
-            for(int j=0; j<6; j++){
-                textFieldBoard.get(j).get(i).setText("");
-                textFieldBoard.get(j).get(i).setEditable(true);
-                textFieldBoard.get(j).get(i).getStyleClass().removeAll("correct", "incorrect");
-                textFieldBoard.get(j).get(i).getStyleClass().add("default");
-            }
+    @FXML
+    void handleErase(ActionEvent event) {
+        isEraseModeOn = !isEraseModeOn;
+        if (isEraseModeOn) {
+            eraseLabel.getStyleClass().remove("labelOff");
+            eraseLabel.getStyleClass().add("labelOn");
+            eraseLabel.setText("on");
+        } else {
+            eraseLabel.getStyleClass().remove("labelOn");
+            eraseLabel.getStyleClass().add("labelOff");
+            eraseLabel.setText("off");
         }
     }
 }

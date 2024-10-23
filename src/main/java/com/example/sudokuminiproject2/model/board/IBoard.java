@@ -6,8 +6,6 @@ import java.util.List;
 public interface IBoard {
 
 
-    void setNumberByIndex(int number, int column, int row);
-
     int getNumberByIndex(int column, int row);
 
     String showBoard();
@@ -36,7 +34,7 @@ public interface IBoard {
     }
 
     default boolean isNumberByBoxAllowed(List<List<Integer>> board, int numberSelected, int column, int row){
-        System.out.println("Check by box Started");
+//        System.out.println("Check by box Started");
         int startRow = (row / 2);
         startRow = startRow * 2;// Fila de inicio de la subcuadrícula
         int startCol = (column / 3);
@@ -52,12 +50,12 @@ public interface IBoard {
 //                System.out.println("Col is " + j);
 //                System.out.println(board.get(i).get(j) + " == " + numberSelected);
                 if (board.get(i).get(j) == numberSelected && column != i && row != j) {
-                    System.out.println("yes bad");
+//                    System.out.println("yes bad");
                     return false; // Número ya presente
                 }
             }
         }
-        System.out.println("no gud");
+//        System.out.println("no gud");
         return true; // Número permitido
     }
 
