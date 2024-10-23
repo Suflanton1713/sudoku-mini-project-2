@@ -227,6 +227,7 @@ public class GameController {
         txt.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+
                 clearHighlights();
                 String currentText = txt.getText();
                 txt.setStyle("-fx-background-color: lightblue;");
@@ -498,21 +499,29 @@ public class GameController {
                 System.out.println("entra como number 2: "+ number2);
                 gameBoard.setNumberByIndex(gameBoard.getGameBoard(),number2, col2, row2);
                 if(number2 == 0){
-                    System.out.println("number 2 era igual a 0, se cambia text field a nada");
-                    textFieldBoard.get(row).get(col).setText("");
-                    gameBoard.setMistakesFix(col,row);
-                    textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
-                    textFieldBoard.get(row).get(col).setStyle("");
-                    clearIncorrectNumbersHighlight(row,col);
+                    for (int i = 0; i < gameBoard.getStackList().size(); i++) {
+                        List<Integer> list = gameBoard.getStackList().get(i);
+                        number2 = list.get(0); // Primer elemento: número
+                        row2 = list.get(1);    // Segundo elemento: fila
+                        col2 = list.get(2);    // Tercer elemento: columna
+                        if (number2 != 0) {
+                            System.out.println("el numero2 que yaaa no es 0 es: "+number2);
+                            textFieldBoard.get(row2).get(col2).setText(String.valueOf(number2));
+                            gameBoard.setMistakes(col2,row2);
+                            validCorrectNumber(number2,row2,col2);
+                            clearIncorrectNumbersHighlight(row2,col2);
+                            return;
+                        }
+                    }
                 }else{
                     System.out.println("number 2 no era igual a 0, se cambia text field a el numero: "+number2);
-                    textFieldBoard.get(row).get(col).setText(String.valueOf(number2));
-                    gameBoard.setMistakes(col,row);
-                    validCorrectNumber(number2,row,col);
-                    clearIncorrectNumbersHighlight(row,col);
+                    textFieldBoard.get(row2).get(col2).setText(String.valueOf(number2));
+                    gameBoard.setMistakes(col2,row2);
+                    validCorrectNumber(number2,row2,col2);
+                    clearIncorrectNumbersHighlight(row2,col2);
                 }
             }else{
-                System.out.println("entra como number 1 porque no es cero: "+number+" se cambia a nada");
+                System.out.println("entra como number 1 porque no es cero: "+number);
                 gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
                 textFieldBoard.get(row).get(col).setText("");
                 gameBoard.setMistakesFix(col,row);
