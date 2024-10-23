@@ -194,14 +194,14 @@ public class GameController {
                 if (input.isValidLength(currentText) && input.isValidNumber(currentText)) {
                     int number = Integer.parseInt(currentText);
                     gameBoard.setNumberByIndex(gameBoard.getGameBoard(),number, col, row);
-                    gameBoard.pushList(number,row,col);
+                    gameBoard.pushToStack(number,row,col);
                     validCorrectNumber(number,row,col);
                 } else {
                     txt.clear();
                 }
                 if (txt.getText().equals("")){
                     txt.getStyleClass().add("default");
-                    gameBoard.pushList(0,row,col);
+                    gameBoard.pushToStack(0,row,col);
                     gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
                     gameBoard.setMistakesFix(col,row);
                     fixIncorrects();
@@ -418,7 +418,7 @@ public class GameController {
             //Y luego lo coloca en el textField
 //            System.out.println("Número "+ hintHandler[0] +" Column "+ hintHandler[1] +" Row "+ hintHandler[2]);
             textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).setText(String.valueOf(hintHandler[0]));
-            gameBoard.pushList(hintHandler[0],hintHandler[2],hintHandler[1]);
+            gameBoard.pushToStack(hintHandler[0],hintHandler[2],hintHandler[1]);
             textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().removeAll("incorrect", "default");
             textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().add("correct");
         }else{
@@ -433,7 +433,7 @@ public class GameController {
                 textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).setText(String.valueOf(hintHardHandler[0]));
                 textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().removeAll("incorrect");
                 textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().add("correct");
-                gameBoard.pushList(hintHandler[0],hintHandler[2],hintHandler[1]);
+                gameBoard.pushToStack(hintHandler[0],hintHandler[2],hintHandler[1]);
                 textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().removeAll("incorrect", "default");
                 textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().add("correct");
             }else{
@@ -457,19 +457,34 @@ public class GameController {
 
     @FXML
     void handleUndo(ActionEvent event) {
-        System.out.println("undo button press");
-        System.out.println(gameBoard.showBoard());
         if(!gameBoard.getStackList().isEmpty()){
-            List<Integer> topList = gameBoard.getStackList().pop();;
-            int number = topList.get(0);//luego veo si lo quito je
+            List<Integer> topList = gameBoard.getStackList().pop();
+            System.out.println(gameBoard.showStack());
+            int number = topList.get(0);
             int row = topList.get(1);
             int col = topList.get(2);
-            gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
-            textFieldBoard.get(row).get(col).setText("");
-            gameBoard.setMistakesFix(col,row);
-            textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
-            textFieldBoard.get(row).get(col).setStyle("");
-            clearIncorrectNumbersHighlight(row,col);
+            if (number ==0){
+                List<Integer> topList2 = gameBoard.getStackList().peek();
+                System.out.println(gameBoard.showStack());
+                int number2 = topList2.get(0);
+                int row2 = topList2.get(1);
+                int col2 = topList2.get(2);
+
+                gameBoard.setNumberByIndex(gameBoard.getGameBoard(),number2, col2, row2);
+                textFieldBoard.get(row).get(col).setText(String.valueOf(number2));
+                gameBoard.setMistakes(col,row);
+                validCorrectNumber(number2,row,col);
+                clearIncorrectNumbersHighlight(row,col);
+
+            }else{
+                gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
+                textFieldBoard.get(row).get(col).setText("");
+                gameBoard.setMistakesFix(col,row);
+                textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
+                textFieldBoard.get(row).get(col).setStyle("");
+                clearIncorrectNumbersHighlight(row,col);
+            }
+
         }else{
             System.out.println("No hay movimientos para deshacer.");
         }

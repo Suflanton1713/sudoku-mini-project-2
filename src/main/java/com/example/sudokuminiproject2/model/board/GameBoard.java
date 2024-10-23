@@ -39,7 +39,7 @@ public class GameBoard extends BoardAdapter{
         return stackList;
     }
 
-    public void pushList(int number, int row, int col){
+    public void pushToStack(int number, int row, int col){
         List<Integer> list = new ArrayList<>(3);
         list.add(number);
         list.add(row);
@@ -77,6 +77,23 @@ public class GameBoard extends BoardAdapter{
             System.out.println("entro aquii error fix");
         }
         System.out.println(showMistakesBoard());
+    }
+    public String showStack() {
+        String finalMessage = "";
+
+        if (stackList.isEmpty()) {
+            return "La pila está vacía.\n";
+        }
+
+        for (int i = stackList.size() - 1; i >= 0; i--) {
+            List<Integer> list = stackList.get(i);
+            for (Integer number : list) {
+                finalMessage += number + " ";
+            }
+            finalMessage += "\n";
+        }
+
+        return finalMessage;
     }
     public String showMistakesBoard(){
         String finalMessage = "";
