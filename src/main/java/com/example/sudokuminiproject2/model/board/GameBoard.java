@@ -8,39 +8,35 @@ import java.util.Stack;
 public class GameBoard extends BoardAdapter{
 
     private List<List<Integer>> gameBoard = new ArrayList<>(6);
+    private List<List<Integer>> hintBoard = new ArrayList<>(6);
     private List<List<Integer>> mistakesBoard = new ArrayList<>(6);
-    private Stack<List<Integer>> listHistory = new Stack<>();
+    private Stack<List<Integer>> stackList = new Stack<>();
     private Board idealBoard;
     private int hints;
     private boolean isGameOver;
     private int mistakeCount = 0;
 
-    public GameBoard(Board idealBoard){
+    public GameBoard(Board idealBoard) {
         hints = 5;
         isGameOver = false;
         this.idealBoard = idealBoard;
-        for(int i=0; i<6; i++){
+        for (int i = 0; i < 6; i++) {
             List<Integer> row = new ArrayList<>(6);
+            List<Integer> hintRow = new ArrayList<>(6);
+            List<Integer> mistakeRow = new ArrayList<>(6);
             for (int x = 0; x < 6; x++) {
                 row.add(0);
+                hintRow.add(0);
+                mistakeRow.add(0);
+
             }
             gameBoard.add(row);
-        }
-
-        for(int i=0; i<6; i++){
-            List<Integer> row = new ArrayList<>(6);
-            for (int x = 0; x < 6; x++) {
-                row.add(0);
-            }
-            mistakesBoard.add(row);
+            hintBoard.add(hintRow);
+            mistakesBoard.add(mistakeRow);
         }
     }
-    public List<List<Integer>> getGameBoard() {
-        return gameBoard;
-    }
-
-    public Stack<List<Integer>> getListHistory() {
-        return listHistory;
+    public Stack<List<Integer>> getStackList() {
+        return stackList;
     }
 
     public void pushList(int number, int row, int col){
@@ -48,36 +44,39 @@ public class GameBoard extends BoardAdapter{
         list.add(number);
         list.add(row);
         list.add(col);
-        listHistory.push(list);
+        stackList.push(list);
+    }
+    public List<List<Integer>> getMistakesBoard() {
+        return mistakesBoard;
+    }
+
+    public List<List<Integer>> getGameBoard() {
+        return gameBoard;
     }
 
     public int getMistakeCount() {
         return mistakeCount;
     }
 
-    public List<List<Integer>> getMistakesBoard() {
-        return mistakesBoard;
-    }
-
     public void setMistakes(int column, int row) {
-        System.out.println("antes de mistake");
+        System.out.println("columna: " + column + ", row: " + row);
         System.out.println(showMistakesBoard());
         if (mistakesBoard.get(column).get(row) == 0) {
             mistakesBoard.get(column).set(row, 1);
             mistakeCount++;
             System.out.println("entro aquii si hay mistake");
-            System.out.println(showMistakesBoard());
+        }else{
+            System.out.println("ya era un numero error");
         }
+        System.out.println(showMistakesBoard());
     }
     public void setMistakesFix(int column, int row) {
-        System.out.println("antes de fix");
-        System.out.println(showMistakesBoard());
         if (mistakesBoard.get(column).get(row) == 1) {
             mistakesBoard.get(column).set(row, 0);
             mistakeCount--;
             System.out.println("entro aquii error fix");
-            System.out.println(showMistakesBoard());
         }
+        System.out.println(showMistakesBoard());
     }
     public String showMistakesBoard(){
         String finalMessage = "";
@@ -88,10 +87,6 @@ public class GameBoard extends BoardAdapter{
             finalMessage = finalMessage + "\n";
         }
         return finalMessage;
-    }
-
-    public void setNumberByIndex(int number, int column, int row){
-        gameBoard.get(column).set(row, number);
     }
 
     public boolean isWinner(){
@@ -109,8 +104,10 @@ public class GameBoard extends BoardAdapter{
         return false;
     }
 
+
+
     public void setInitialHints(){
-        System.out.println("Setting initial hints");
+
         Random random = new Random();
         int randomRow, randomCol, number;
         for(int i = 0; i<4; i+=3){
@@ -120,20 +117,63 @@ public class GameBoard extends BoardAdapter{
                     randomRow = randomRow *2 +(random.nextInt(2));
                     randomCol = (i / 3);
                     randomCol = randomCol * 3 + (random.nextInt(3));
-                    System.out.println("On row " + randomRow + " on Column " + randomCol);
-                    System.out.println("The number there is " + getNumberByIndex(randomCol, randomRow));
+
 
                 }while(getNumberByIndex(randomCol, randomRow) != 0);
-                System.out.println("Introducing new number " + idealBoard.getNumberByIndex(randomCol, randomRow));
-
                 number = idealBoard.getNumberByIndex(randomCol, randomRow);
-                setNumberByIndex(number ,randomCol, randomRow);
+                setNumberByIndex(gameBoard,number ,randomCol, randomRow);
+                setNumberByIndex(hintBoard,1, randomCol, randomRow);
+
             }
         }
 
     }
 
     public int getNumberByIndex(int column, int row){  return gameBoard.get(column).get(row);  };
+
+    public boolean isActualPositionMistake(int column, int row){  return mistakesBoard.get(column).get(row) == 1;  };
+
+    public boolean isActualPositionHint(int column, int row){  return hintBoard.get(column).get(row) == 1;  };
+
+    public boolean isNumberByBoxAllowed(int verifiedNumber, int column, int row) {
+
+        int startRow = (row / 2);
+        startRow = startRow * 2;// Fila de inicio de la subcuadrícula
+        int startCol = (column / 3);
+        startCol = startCol *3;// Columna de inicio de la subcuadrícula
+
+        // Iterar sobre la subcuadrícula de 2 filas por 3 columnas
+        for (int i = startCol; i < startCol + 3; i++) {
+            for (int j = startRow ; j < startRow + 2; j++) {
+                // Verificar si el número ya está en la subcuadrícula
+                if (gameBoard.get(i).get(j) == verifiedNumber && column != i && row != j) {
+                    return false; // Número ya presente
+                }
+            }
+        }
+
+        return true; // Número permitido
+    }
+
+    public boolean isNumberByColumnAllowed(int randomNumber, int column, int row){
+        for(int j=0; j<6; j++){
+            if(gameBoard.get(column).get(j) == randomNumber && row != j ){
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    public boolean isNumberByRowAllowed(int randomNumber, int column, int row){
+        for(int i=0; i<6; i++){
+            if(gameBoard.get(i).get(row) == randomNumber && column != i ){
+                return false;
+            }
+        }
+        return true;
+
+    }
 
     public String showBoard(){
         String finalMessage = "";
@@ -154,11 +194,59 @@ public class GameBoard extends BoardAdapter{
         }
     }
 
-    public class Hint{
 
-        public int getHints(){return hints;}
 
-        public boolean canUseHints(){return hints !=0 && isGameOver;}
+    public class Hint {
+
+
+        public int getHints() {
+            return hints;
+        }
+
+        public boolean canUseHints() {
+            return hints != 0 && isGameOver;
+        }
+
+        public int[] secondHardTryingHint() {
+
+            // If no empty position was found, start revisiting filled positions
+//            System.out.println(mistakesBoard);
+            for (int row = 0; row < 6; row++) {
+                for (int col = 0; col < 6; col++) {
+//                    System.out.println("The position has mistake " + col + " " + row + " " + (isActualPositionMistake(col, row) && !isActualPositionHint(col, row)));
+                    if (isActualPositionMistake(col, row) && !isActualPositionHint(col, row)) {
+                        for (int num = 1; num <= 6; num++) {
+                            if (isNumberByBoxAllowed(num, col, row)
+                                    && isNumberByColumnAllowed(num, col, row)
+                                    && isNumberByRowAllowed(num, col, row)) {
+                                setNumberByIndex(gameBoard, num, col, row);
+                                setNumberByIndex(mistakesBoard, 0, col, row);
+                                mistakeCount--;
+                                hints--;
+                                return new int[]{num, col, row};
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (int row = 0; row < 6; row++) {
+                for (int col = 0; col < 6; col++) {
+                    if(getNumberByIndex(col, row) != idealBoard.getNumberByIndex(col, row)){
+                        if(isActualPositionMistake(col, row)){
+                            mistakeCount--;
+                            setNumberByIndex(mistakesBoard, 0, col, row);
+                        }
+                        setNumberByIndex(gameBoard, idealBoard.getNumberByIndex(col, row), col, row);
+                        hints--;
+                        return new int[]{idealBoard.getNumberByIndex(col, row), col, row};
+                    }
+                }
+            }
+            // If no hint was found, return failure
+            return new int[]{-1};
+        }
+
 
         public int[] randomHint() {
             Random rand = new Random();
@@ -166,43 +254,44 @@ public class GameBoard extends BoardAdapter{
             int randomColPosition = -1;
             randomRowPosition = rand.nextInt(6);
             randomColPosition = rand.nextInt(6);
-            boolean isAnAvailablePosition = false;
+            int hintsAttempts = 0;
+            int number;
             do {
-
-                System.out.println("The hint col is " + randomColPosition);
-                System.out.println("The hint row is " + randomRowPosition);
-                if(getNumberByIndex(randomColPosition, randomRowPosition) == idealBoard.getNumberByIndex(randomColPosition, randomRowPosition) ){
-
-                    //The following code is an algorithm that allows to search into cols and rows for a space with hints available
-                    //It goes by columns until it reaches the sixth column, then he jumps off the actual row towards the next row and starts again in the first column
-                    //Makes the same thing with the rows.
+                hintsAttempts++;
+//                System.out.println("row "+ randomRowPosition + " col " + randomColPosition);
+                if(getNumberByIndex(randomColPosition, randomRowPosition) != 0){
                     if(randomColPosition==5){
                         randomColPosition= 0;
                         if(randomRowPosition==5){
                             randomRowPosition = 0;
                         }else{
                             randomRowPosition++;
-                            System.out.println("We moved the row " + randomRowPosition);
                         }
                     }else{
                         randomColPosition++;
-                        System.out.println("We moved the col " + randomColPosition);
                     }
 
-
                 }else{
-                    isAnAvailablePosition = true;
+                    number = idealBoard.getNumberByIndex(randomColPosition, randomRowPosition);
+//                    System.out.println("Selected number "+ number);
+                    if(isNumberByRowAllowed(gameBoard, number, randomColPosition, randomRowPosition)
+                            && isNumberByColumnAllowed(gameBoard, number, randomColPosition, randomRowPosition)
+                            && isNumberByBoxAllowed(gameBoard, number, randomColPosition, randomRowPosition)){
+                        setNumberByIndex(gameBoard, number,randomColPosition,randomRowPosition);
+                        hints--;
+                        return new int[]{number,randomColPosition,randomRowPosition};
+                    }
+
                 }
 
+            } while (hintsAttempts <= 36);
 
-            } while (isAnAvailablePosition == false);
-            setNumberByIndex(idealBoard.getNumberByIndex(randomColPosition, randomRowPosition),randomColPosition,randomRowPosition);
-            hints--;
-            return (new int[]{randomColPosition,randomRowPosition});
+
+            return (new int[]{-1});
         }
-
 
 
     }
 
 }
+

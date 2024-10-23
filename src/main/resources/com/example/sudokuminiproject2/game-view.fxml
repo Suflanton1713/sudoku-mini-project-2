@@ -479,7 +479,7 @@
                   <Button id="eraseButton" mnemonicParsing="false" prefHeight="85.0" prefWidth="75.0" GridPane.rowIndex="1" />
                   <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button id="hintButton" mnemonicParsing="false" onAction="#handleReturn" prefHeight="85.0" prefWidth="75.0" />
+                        <Button id="hintButton" mnemonicParsing="false" onAction="#handleHint" prefHeight="85.0" prefWidth="75.0" />
                         <Label fx:id="hintsLabel11" alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="21.0" text="3" textFill="WHITE">
                            <font>
                               <Font name="SansSerif Bold" size="20.0" />
