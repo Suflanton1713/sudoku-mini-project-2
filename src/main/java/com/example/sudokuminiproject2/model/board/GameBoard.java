@@ -201,7 +201,7 @@ public class GameBoard extends BoardAdapter{
             System.out.println(mistakes);
             for (int row = 0; row < 6; row++) {
                 for (int col = 0; col < 6; col++) {
-                    System.out.println("The position has mistake " + col + " " + row + " " + (isActualPositionMistake(col, row) && !isActualPositionHint(col, row)));
+                   // System.out.println("The position has mistake " + col + " " + row + " " + (isActualPositionMistake(col, row) && !isActualPositionHint(col, row)));
                     if (isActualPositionMistake(col, row) && !isActualPositionHint(col, row)) {
                         for (int num = 1; num <= 6; num++) {
                             if (isNumberByBoxAllowed(num, col, row)

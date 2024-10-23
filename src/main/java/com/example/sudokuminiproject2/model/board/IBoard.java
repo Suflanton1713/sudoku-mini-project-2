@@ -41,16 +41,16 @@ public interface IBoard {
         startRow = startRow * 2;// Fila de inicio de la subcuadrícula
         int startCol = (column / 3);
         startCol = startCol *3;// Columna de inicio de la subcuadrícula
-        System.out.println("startRow is " + startRow + " and startCol is " + startCol);
-        System.out.println("row " + row + " and col is " + column);
+//        System.out.println("startRow is " + startRow + " and startCol is " + startCol);
+//        System.out.println("row " + row + " and col is " + column);
 
         // Iterar sobre la subcuadrícula de 2 filas por 3 columnas
         for (int i = startCol; i < startCol + 3; i++) {
             for (int j = startRow ; j < startRow + 2; j++) {
                 // Verificar si el número ya está en la subcuadrícula
-                System.out.println("Row is " + i);
-                System.out.println("Col is " + j);
-                System.out.println(board.get(i).get(j) + " == " + numberSelected);
+//                System.out.println("Row is " + i);
+//                System.out.println("Col is " + j);
+//                System.out.println(board.get(i).get(j) + " == " + numberSelected);
                 if (board.get(i).get(j) == numberSelected && column != i && row != j) {
                     System.out.println("yes bad");
                     return false; // Número ya presente

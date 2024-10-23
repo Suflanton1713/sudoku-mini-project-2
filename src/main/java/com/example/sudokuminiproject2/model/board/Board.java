@@ -22,15 +22,13 @@ public class Board extends BoardAdapter {
             Arrays.setAll(allowedNumbers, n -> n+1);
             System.out.println("Created new Array of random numbers");
             for(int j=0; j<6; j++){
-                System.out.println("Rellenando columna " +i);
+               // System.out.println("Rellenando columna " +i);
                 board.get(i).set(j, randomNumberGenerator(allowedNumbers));
 
 
             }
             System.out.println(showBoard());
-            System.out.println("Correcting " +i +" column");
             correctingBoard(i);
-            System.out.println("Correctly Done");
             System.out.println(showBoard());
 
 
@@ -45,18 +43,18 @@ public class Board extends BoardAdapter {
 
 
         do {
-            System.out.println("The random index is " + randomIndex);
+//            System.out.println("The random index is " + randomIndex);
             randomNumber = (allowedNumbers[randomIndex] != 0 ? allowedNumbers[randomIndex] : 0);
             if(randomNumber == 0){
                 randomIndex = (randomIndex == allowedNumbers.length-1 ? 0 : randomIndex + 1);
             }
-            System.out.println("The number selected is " + randomNumber);
+//            System.out.println("The number selected is " + randomNumber);
 
         } while(randomNumber == 0);
 
         allowedNumbers[randomIndex] = 0;
 
-        System.out.println("The number given is "+ randomNumber);
+//        System.out.println("The number given is "+ randomNumber);
         return randomNumber;
     }
 
