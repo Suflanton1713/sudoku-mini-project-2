@@ -516,10 +516,11 @@ public class GameController {
 
                     }else{
                         textFieldBoard.get(row).get(col).setText(String.valueOf(gameBoard.getNumberByIndex(col,row)));
-
+                        textFieldBoard.get(row).get(col).getStyleClass().add("incorrect");
                         if(gameBoard.isActualPositionMistake(col,row)){
                             textFieldBoard.get(row).get(col).getStyleClass().removeAll("notes");
                             textFieldBoard.get(row).get(col).getStyleClass().add("incorrect");
+                            textFieldBoard.get(row).get(col).setStyle("-fx-background-color: #ffcccc;");
                         }else{
                             textFieldBoard.get(row).get(col).getStyleClass().removeAll("notes");
                             textFieldBoard.get(row).get(col).getStyleClass().removeAll("hintsButNotes");
