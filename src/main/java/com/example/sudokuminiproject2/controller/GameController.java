@@ -159,6 +159,9 @@ public class GameController {
     @FXML
     private javafx.scene.control.Button pauseButton;
 
+    @FXML
+    private Label draftLabel;
+
     private int segundos = 0;
 
     private int minutos = 0;
@@ -178,6 +181,9 @@ public class GameController {
 
     public void initialize() {
         eraseLabel.getStyleClass().add("labelOff");
+        pauseButton.getStyleClass().add("continueTime");
+        draftLabel.getStyleClass().add("labelOff");
+        draftLabel.setText("off");
         eraseLabel.setText("off");
         this.input = new Input();
         this.actualBoard = new Board();
@@ -215,8 +221,9 @@ public class GameController {
     @FXML
     void handlePauseButton(ActionEvent event) {
         if (!gamePaused) {
+            pauseButton.getStyleClass().remove("continueButton");
+            pauseButton.getStyleClass().add("stopTime");
             timeline.pause(); // Pausar el cronómetro
-            pauseButton.setText("Reanudar");
             for (List<TextField> txtFieldRows : textFieldBoard) {
                 for (TextField txtField : txtFieldRows) {
                     txtField.setDisable(true);
@@ -229,8 +236,9 @@ public class GameController {
             eraseLabel.setDisable(true);
             draftButton.setDisable(true);
         } else {
+            pauseButton.getStyleClass().remove("stopTime");
+            pauseButton.getStyleClass().add("continueTime");
             timeline.play(); // Reanudar el cronómetro
-            pauseButton.setText("Pausar");
             for (List<TextField> txtFieldRows : textFieldBoard) {
                 for (TextField txtField : txtFieldRows) {
                     txtField.setDisable(false);
@@ -626,6 +634,9 @@ public class GameController {
     @FXML
     void onHandleDraft(ActionEvent event) {
         if(gameMode == 1){
+            draftLabel.getStyleClass().remove("labelOn");
+            draftLabel.getStyleClass().add("labelOff");
+            draftLabel.setText("off");
             hintButton.setDisable(false);
             eraseButton.setDisable(false);
             undoButton.setDisable(false);
@@ -656,6 +667,9 @@ public class GameController {
             }
             gameMode = 0;
         }else{
+            draftLabel.getStyleClass().remove("labelOff");
+            draftLabel.getStyleClass().add("labelOn");
+            draftLabel.setText("on");
             hintButton.setDisable(true);
             eraseButton.setDisable(true);
             undoButton.setDisable(true);

@@ -42,7 +42,7 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="44.0" prefWidth="222.0" GridPane.columnIndex="1">
          <children>
-            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#handlePauseButton" prefHeight="25.0" prefWidth="0.0" text="Button" />
+            <Button id="timeButton" fx:id="pauseButton" mnemonicParsing="false" onAction="#handlePauseButton" prefHeight="25.0" prefWidth="25.0" />
             <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="166.0" text="00:00" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="26.0" />
@@ -476,7 +476,6 @@
               </rowConstraints>
                <children>
                   <Button id="undoButton" fx:id="undoButton" mnemonicParsing="false" onAction="#handleUndo" prefHeight="85.0" prefWidth="75.0" GridPane.columnIndex="1" />
-                  <Button id="notesButton" fx:id="draftButton" mnemonicParsing="false" onAction="#onHandleDraft" prefHeight="85.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                      <children>
                         <Button id="hintButton" fx:id="hintButton" mnemonicParsing="false" onAction="#handleHint" prefHeight="85.0" prefWidth="75.0" />
@@ -500,6 +499,19 @@
                            <font>
                               <Font name="SansSerif Bold" size="13.0" />
                            </font>
+                        </Label>
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Button id="notesButton" fx:id="draftButton" mnemonicParsing="false" onAction="#onHandleDraft" prefHeight="85.0" prefWidth="75.0" />
+                        <Label fx:id="draftLabel" alignment="CENTER" prefHeight="22.0" prefWidth="27.0" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="SansSerif Bold" size="13.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets left="43.0" top="30.0" />
+                           </StackPane.margin>
                         </Label>
                      </children>
                   </StackPane>
