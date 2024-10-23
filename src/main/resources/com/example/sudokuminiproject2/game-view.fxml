@@ -476,7 +476,6 @@
                <children>
                   <Button id="undoButton" mnemonicParsing="false" onAction="#handleUndo" prefHeight="85.0" prefWidth="75.0" GridPane.columnIndex="1" />
                   <Button id="notesButton" mnemonicParsing="false" prefHeight="85.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button id="eraseButton" mnemonicParsing="false" prefHeight="85.0" prefWidth="75.0" GridPane.rowIndex="1" />
                   <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
                      <children>
                         <Button id="hintButton" mnemonicParsing="false" onAction="#handleHint" prefHeight="85.0" prefWidth="75.0" />
@@ -487,6 +486,19 @@
                            <StackPane.margin>
                               <Insets bottom="48.0" left="50.0" />
                            </StackPane.margin>
+                        </Label>
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Button id="eraseButton" fx:id="eraseButton" mnemonicParsing="false" onAction="#handleErase" prefHeight="85.0" prefWidth="75.0" />
+                        <Label fx:id="eraseLabel" alignment="CENTER" prefHeight="22.0" prefWidth="27.0" textAlignment="CENTER" textFill="WHITE">
+                           <StackPane.margin>
+                              <Insets left="43.0" top="30.0" />
+                           </StackPane.margin>
+                           <font>
+                              <Font name="SansSerif Bold" size="13.0" />
+                           </font>
                         </Label>
                      </children>
                   </StackPane>

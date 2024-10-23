@@ -89,3 +89,17 @@
 .highlight {
     -fx-background-color: #e6e6fb;
 }
+.labelOff {
+    -fx-background-color:  #f3d7e1;
+    -fx-border-color :  #4e3f51;
+    -fx-text-fill :  #4e3f51;
+    -fx-border-radius :  6;
+    -fx-background-radius:  7;
+    -fx-border-width:  3;
+}
+.labelOn {
+    -fx-background-color:   #aba3cc;
+    -fx-text-fill :  white;
+    -fx-background-radius:  7;
+
+}

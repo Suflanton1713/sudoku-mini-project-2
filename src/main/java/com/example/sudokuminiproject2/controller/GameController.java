@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -131,14 +132,23 @@ public class GameController {
     @FXML
     private Label hintsLabel;
 
+    @FXML
+    private Button eraseButton;
+
+    @FXML
+    private Label eraseLabel;
+
     private Input input;
     private Board actualBoard;
     private GameBoard gameBoard;
+    private boolean isEraseModeOn = false;
     private GameBoard.Hint hints;
     private List<List<TextField>> textFieldBoard = new ArrayList<>(6);
     private List<TextField> textFields = new ArrayList<>();
 
     public void initialize() {
+        eraseLabel.getStyleClass().add("labelOff");
+        eraseLabel.setText("off");
         this.input = new Input();
         this.actualBoard = new Board();
         this.gameBoard = new GameBoard(this.actualBoard);
@@ -208,7 +218,6 @@ public class GameController {
                     clearIncorrectNumbersHighlight(row,col);
                 }
                 System.out.println("Numero de errores: "+gameBoard.getMistakeCount());
-                System.out.println("tablero game: "+gameBoard.showBoard());
                 win();
             }
         });
@@ -226,12 +235,24 @@ public class GameController {
                     int number = Integer.parseInt(currentText);
                     highlightSameNumbers(number);
                 }
+
+                if (isEraseModeOn && txt.isEditable()) {
+                    txt.clear();
+                    gameBoard.setNumberByIndex(gameBoard.getGameBoard(), 0, col, row);
+                    gameBoard.pushToStack(0, row, col);
+                    gameBoard.setMistakesFix(col, row);
+                    clearIncorrectNumbersHighlight(row, col);
+                    txt.getStyleClass().removeAll("incorrect", "correct");
+                    txt.getStyleClass().add("default");
+                    System.out.println(gameBoard.showBoard());
+                    System.out.println(gameBoard.showMistakesBoard());
+                }
+
             }
         });
     }
     public void validCorrectNumber(int number, int row, int col){
         if((gameBoard.isNumberByColumnAllowed(gameBoard.getGameBoard(),number, col,row))&&(gameBoard.isNumberByRowAllowed(gameBoard.getGameBoard(),number,col,row))&&(gameBoard.isNumberByBoxAllowed(gameBoard.getGameBoard(),number,col,row))){
-            System.out.println("sipiiii entro aqui");
             textFieldBoard.get(row).get(col).getStyleClass().removeAll("incorrect", "default");
             textFieldBoard.get(row).get(col).getStyleClass().add("correct");
             gameBoard.setMistakesFix(col,row);
@@ -245,15 +266,10 @@ public class GameController {
     }
 
     public void fixIncorrects(){
-        System.out.println("tablero de mistakes");
-        System.out.println(gameBoard.showMistakesBoard());
         for(int i=0;i<6;i++){
             for(int j=0;j<6;j++){
                 if(gameBoard.getMistakesBoard().get(i).get(j)==1){
-                    System.out.println("tablero game: ");
-                    System.out.println(gameBoard.showBoard());
                     int number = gameBoard.getNumberByIndex(i,j);
-                    System.out.println("number incorrect: "+number);
                     validCorrectNumber(number,j,i);
                     clearIncorrectNumbersHighlight(j,i);
                 }
@@ -453,19 +469,15 @@ public class GameController {
 
     }
 
-
-
     @FXML
     void handleUndo(ActionEvent event) {
         if(!gameBoard.getStackList().isEmpty()){
             List<Integer> topList = gameBoard.getStackList().pop();
-            System.out.println(gameBoard.showStack());
             int number = topList.get(0);
             int row = topList.get(1);
             int col = topList.get(2);
             if (number ==0){
                 List<Integer> topList2 = gameBoard.getStackList().peek();
-                System.out.println(gameBoard.showStack());
                 int number2 = topList2.get(0);
                 int row2 = topList2.get(1);
                 int col2 = topList2.get(2);
@@ -487,6 +499,20 @@ public class GameController {
 
         }else{
             System.out.println("No hay movimientos para deshacer.");
+        }
+    }
+
+    @FXML
+    void handleErase(ActionEvent event) {
+        isEraseModeOn = !isEraseModeOn;
+        if (isEraseModeOn) {
+            eraseLabel.getStyleClass().remove("labelOff");
+            eraseLabel.getStyleClass().add("labelOn");
+            eraseLabel.setText("on");
+        } else {
+            eraseLabel.getStyleClass().remove("labelOn");
+            eraseLabel.getStyleClass().add("labelOff");
+            eraseLabel.setText("off");
         }
     }
 }
