@@ -6,15 +6,44 @@ import com.example.sudokuminiproject2.view.WelcomeStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import javax.management.modelmbean.ModelMBean;
 import java.io.IOException;
 
+/**
+ * The Main class serves as the entry point of the Sudoku application.
+ * It extends the JavaFX Application class to launch the graphical user interface.
+ * The {@code start} method initializes the main window and generates the game board.
+ *
+ * @author Maria Juliana Saavedra
+ * @author Libardo Alejandro Quintero
+ * @version 1.0
+ * @see javafx.application.Application
+ * @see com.example.sudokuminiproject2.model.board.Board
+ * @see com.example.sudokuminiproject2.model.board.GameBoard
+ * @see com.example.sudokuminiproject2.view.WelcomeStage
+ */
 public class Main extends Application {
 
+    /**
+     * The main method of the application, responsible for launching the GUI.
+     *
+     * @param args Command-line arguments.
+     * @see #start(Stage)
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * This overridden method starts the JavaFX application lifecycle.
+     * It initializes the WelcomeStage and the game board. It also prints the state of
+     * the current board, the ideal board, and a board with initial hints.
+     *
+     * @param primaryStage The main window where the interface will be displayed.
+     * @throws IOException If an error occurs while loading resources or necessary files.
+     * @see WelcomeStage
+     * @see GameBoard
+     * @see Board
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         WelcomeStage.getInstance();
@@ -23,7 +52,7 @@ public class Main extends Application {
 
         GameBoard gameBoard = new GameBoard(actualBoard);
 
-       System.out.println("GAME BOARD");
+        System.out.println("GAME BOARD");
         System.out.println(gameBoard.showBoard());
         System.out.println("IDEAL BOARD");
         System.out.println(actualBoard.showIdealGame(actualBoard.getBoard()));
@@ -31,21 +60,5 @@ public class Main extends Application {
         gameBoard.setInitialHints();
         System.out.println("BOARD WITH HINTS");
         System.out.println(gameBoard.showBoard());
-
-//        GameBoard.Hint hints = gameBoard.new Hint();
-//        int[] hintHandler;
-//
-//        for(int i=0; i<24; i++){
-//            if(hints.randomHint()[0]!=-1){
-//                hintHandler = hints.randomHint();
-//                System.out.println("Número "+ hintHandler[0] +" Column "+ hintHandler[1] +" Row "+ hintHandler[2]);
-//            }else{
-//                System.out.println("Hint doesnt help the user");
-//            }
-//
-//            System.out.println(i + " hint");
-//            System.out.println(gameBoard.showBoard());
-//        }
-//        System.out.println(hints.getHints());
     }
 }
