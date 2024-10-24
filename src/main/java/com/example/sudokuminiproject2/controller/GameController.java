@@ -251,6 +251,7 @@ public class GameController {
             eraseButton.setDisable(true);
             eraseLabel.setDisable(true);
             draftButton.setDisable(true);
+            draftLabel.setDisable(true);
         } else {
             pauseButton.getStyleClass().remove("stopTime");
             pauseButton.getStyleClass().add("continueTime");
@@ -266,6 +267,7 @@ public class GameController {
             eraseButton.setDisable(false);
             eraseLabel.setDisable(false);
             draftButton.setDisable(false);
+            draftLabel.setDisable(false);
         }
         gamePaused = !gamePaused; // Alternar estado
     }
@@ -353,19 +355,24 @@ public class GameController {
                 }
 
                 if (isEraseModeOn && !(gameBoard.isActualPositionHint(col,row))){
-                    txt.clear();
-                    gameBoard.pushToStack(gameBoard.getNumberByIndex(col,row), row, col);
-                    gameBoard.setNumberByIndex(gameBoard.getGameBoard(), 0, col, row);
-                    gameBoard.setMistakesFix(col, row);
-                    clearIncorrectNumbersHighlight(row, col);
-                    txt.getStyleClass().removeAll("incorrect", "correct");
-                    txt.getStyleClass().add("default");
-                    txt.setEditable(false);
-                    fixIncorrects();
-                    System.out.println(gameBoard.showBoard());
-                    System.out.println(gameBoard.showMistakesBoard());
-                    System.out.println("initial hints board: ");
-                    System.out.println(gameBoard.showInitialHintsBoard());
+                    System.out.println("Borrar numero "+ gameBoard.getNumberByIndex(col,row) + " fila " + row + " columna " +col);
+                        txt.clear();
+                        if(!(gameBoard.getNumberByIndex(col,row)==0)){
+                            gameBoard.pushToStack(gameBoard.getNumberByIndex(col,row), row, col);
+                        }
+                        gameBoard.setNumberByIndex(gameBoard.getGameBoard(), 0, col, row);
+                        gameBoard.setMistakesFix(col, row);
+                        clearIncorrectNumbersHighlight(row, col);
+                        txt.getStyleClass().removeAll("incorrect", "correct");
+                        txt.getStyleClass().add("default");
+                        txt.setEditable(false);
+                        fixIncorrects();
+                        System.out.println(gameBoard.showBoard());
+                        System.out.println(gameBoard.showMistakesBoard());
+                        System.out.println("initial hints board: ");
+                        System.out.println(gameBoard.showInitialHintsBoard());
+
+
                 }else if (!isEraseModeOn ) {
                     if (gameBoard.getInitialHintsBoard().get(col).get(row) == 0) {
                         txt.setEditable(true);
@@ -617,7 +624,7 @@ public class GameController {
 
     @FXML
     void handleHint(ActionEvent event) {
-        if(hints.getHints() != 0){
+        if(hints.getHints() != -50){
 
             int[] hintHandler;
             int[] hintHardHandler;
@@ -643,13 +650,11 @@ public class GameController {
                 if(hintHardHandler[0]!=-1){
                     //Si si encuentra por el segundo método, lo cambia en la matriz del modelo y lo pone el textfield y cambia el estilo, falta el background je
 //                System.out.println("Número "+ hintHardHandler[0] +" Column "+ hintHardHandler[1] +" Row "+ hintHardHandler[2]);
-                    gameBoard.pushToStack(gameBoard.getNumberByIndex(hintHandler[1],hintHandler[2]),hintHandler[2],hintHandler[1]);
-                    gameBoard.setNumberByIndex(gameBoard.getGameBoard(), hintHandler[0],hintHandler[1],hintHandler[2]);
+                    gameBoard.pushToStack(gameBoard.getNumberByIndex(hintHardHandler[1],hintHardHandler[2]),hintHardHandler[2],hintHardHandler[1]);
+                    gameBoard.setNumberByIndex(gameBoard.getGameBoard(), hintHardHandler[0],hintHardHandler[1],hintHardHandler[2]);
                     textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).setText(String.valueOf(hintHardHandler[0]));
                     textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().removeAll("incorrect");
                     textFieldBoard.get(hintHardHandler[2]).get(hintHardHandler[1]).getStyleClass().add("correct");
-                    textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().removeAll("incorrect", "default");
-                    textFieldBoard.get(hintHandler[2]).get(hintHandler[1]).getStyleClass().add("correct");
                 }else{
                     //Si no encuentra posición donde colocarlo de ninguna forma, entonces manda un error.
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -664,7 +669,7 @@ public class GameController {
             actualBoard.showBoard();
             gameBoard.showMistakesBoard();
             hintsLabel.setText(String.valueOf(hints.getHints()));
-            if(hints.getHints()==0){
+            if(hints.getHints()==-50){
                 hintButton.setDisable(true);
             }
         }else{
@@ -683,18 +688,19 @@ public class GameController {
             int number = topList.get(0);
             int row = topList.get(1);
             int col = topList.get(2);
+            System.out.println("Undo numero "+ topList.get(0) + " fila " + topList.get(1) + " columna " +topList.get(2));
             if (number==0){
                 gameBoard.setNumberByIndex(gameBoard.getGameBoard(),0, col, row);
                 textFieldBoard.get(row).get(col).clear();
                 textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
                 textFieldBoard.get(row).get(col).setStyle("");
-                gameBoard.setMistakes(col,row);
+                gameBoard.setMistakesFix(col,row);
                 clearIncorrectNumbersHighlight(row,col);
                 System.out.println(gameBoard.showBoard());
             }else{
                 gameBoard.setNumberByIndex(gameBoard.getGameBoard(),number, col, row);
                 textFieldBoard.get(row).get(col).setText(String.valueOf(number));
-                gameBoard.setMistakesFix(col,row);
+                gameBoard.setMistakes(col,row);
                 validCorrectNumber(0,row,col);
                 clearIncorrectNumbersHighlight(row,col);
                 System.out.println(gameBoard.showBoard());
@@ -709,11 +715,13 @@ public class GameController {
     @FXML
     void onHandleDraft(ActionEvent event) {
         if(gameMode == 1){
+            clearHighlights();
             draftLabel.getStyleClass().remove("labelOn");
             draftLabel.getStyleClass().add("labelOff");
             draftLabel.setText("off");
             hintButton.setDisable(false);
             eraseButton.setDisable(false);
+            eraseLabel.setDisable(false);
             undoButton.setDisable(false);
             newGameButton.setDisable(false);
             for (int row = 0; row < 6; row++) {
@@ -772,14 +780,17 @@ public class GameController {
     void handleErase(ActionEvent event) {
         isEraseModeOn = !isEraseModeOn;
         if (isEraseModeOn) {
+
             hintButton.setDisable(true);
             undoButton.setDisable(true);
             draftButton.setDisable(true);
+            draftLabel.setDisable(true);
             newGameButton.setDisable(true);
             eraseLabel.getStyleClass().remove("labelOff");
             eraseLabel.getStyleClass().add("labelOn");
             eraseLabel.setText("on");
         } else {
+            draftLabel.setDisable(false);
             hintButton.setDisable(false);
             undoButton.setDisable(false);
             draftButton.setDisable(false);
