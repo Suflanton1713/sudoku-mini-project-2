@@ -126,3 +126,21 @@
     -fx-background-radius:  7;
 
 }
+
+.dialog-pane {
+    -fx-background-image: url('winImage.jpeg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-border-color: #purple;
+    -fx-border-width: 10px;
+    -fx-pref-width: 1140px; /* Ancho preferido de la alerta */
+    -fx-pref-height: 200px; /* Alto preferido de la alerta */
+
+}
+
+
+.button-bar .button {
+    -fx-background-color: #4682b4; /* Color de fondo de los botones */
+    -fx-text-fill: white;           /* Color del texto de los botones */
+}

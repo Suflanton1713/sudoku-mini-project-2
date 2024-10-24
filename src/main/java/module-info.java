@@ -2,6 +2,7 @@ module com.example.sudokuminiproject2 {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.management;
+    requires java.desktop;
 
 
     opens com.example.sudokuminiproject2 to javafx.fxml;

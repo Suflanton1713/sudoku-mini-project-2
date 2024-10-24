@@ -1,0 +1,1 @@
+package com.example.sudokuminiproject2;dialogPane.getStylesheets().add(getClass().getResource("estilos.css").toExternalForm());

@@ -42,9 +42,9 @@ public class GameBoard extends BoardAdapter{
         return stackList;
     }
 
-    public void pushToStack(int number, int row, int col){
-        List<Integer> list = new ArrayList<>(3);
-        list.add(number);
+    public void pushToStack(int previousNumber, int row, int col){
+        List<Integer> list = new ArrayList<>(4);
+        list.add(previousNumber);
         list.add(row);
         list.add(col);
         stackList.push(list);
@@ -156,6 +156,7 @@ public class GameBoard extends BoardAdapter{
                 }while(getNumberByIndex(randomCol, randomRow) != 0);
                 number = idealBoard.getNumberByIndex(randomCol, randomRow);
                 setNumberByIndex(gameBoard,number ,randomCol, randomRow);
+                setNumberByIndex(hintBoard,1 ,randomCol, randomRow);
             }
         }
 
@@ -170,21 +171,18 @@ public class GameBoard extends BoardAdapter{
     public boolean isNumberByBoxAllowed(int verifiedNumber, int column, int row) {
 
         int startRow = (row / 2);
-        startRow = startRow * 2;// Fila de inicio de la subcuadrícula
+        startRow = startRow * 2;
         int startCol = (column / 3);
-        startCol = startCol *3;// Columna de inicio de la subcuadrícula
-
-        // Iterar sobre la subcuadrícula de 2 filas por 3 columnas
+        startCol = startCol *3;
         for (int i = startCol; i < startCol + 3; i++) {
             for (int j = startRow ; j < startRow + 2; j++) {
-                // Verificar si el número ya está en la subcuadrícula
                 if (gameBoard.get(i).get(j) == verifiedNumber && column != i && row != j) {
-                    return false; // Número ya presente
+                    return false;
                 }
             }
         }
 
-        return true; // Número permitido
+        return true;
     }
 
     public boolean isNumberByColumnAllowed(int randomNumber, int column, int row){
@@ -240,18 +238,13 @@ public class GameBoard extends BoardAdapter{
         }
 
         public int[] secondHardTryingHint() {
-
-            // If no empty position was found, start revisiting filled positions
-//            System.out.println(mistakesBoard);
             for (int row = 0; row < 6; row++) {
                 for (int col = 0; col < 6; col++) {
-//                    System.out.println("The position has mistake " + col + " " + row + " " + (isActualPositionMistake(col, row) && !isActualPositionHint(col, row)));
                     if (isActualPositionMistake(col, row) && !isActualPositionHint(col, row)) {
                         for (int num = 1; num <= 6; num++) {
                             if (isNumberByBoxAllowed(num, col, row)
                                     && isNumberByColumnAllowed(num, col, row)
                                     && isNumberByRowAllowed(num, col, row)) {
-                                setNumberByIndex(gameBoard, num, col, row);
                                 setNumberByIndex(mistakesBoard, 0, col, row);
                                 mistakeCount--;
                                 hints--;
@@ -269,7 +262,6 @@ public class GameBoard extends BoardAdapter{
                             mistakeCount--;
                             setNumberByIndex(mistakesBoard, 0, col, row);
                         }
-                        setNumberByIndex(gameBoard, idealBoard.getNumberByIndex(col, row), col, row);
                         hints--;
                         return new int[]{idealBoard.getNumberByIndex(col, row), col, row};
                     }
@@ -290,7 +282,6 @@ public class GameBoard extends BoardAdapter{
             int number;
             do {
                 hintsAttempts++;
-//                System.out.println("row "+ randomRowPosition + " col " + randomColPosition);
                 if(getNumberByIndex(randomColPosition, randomRowPosition) != 0){
                     if(randomColPosition==5){
                         randomColPosition= 0;
@@ -305,11 +296,10 @@ public class GameBoard extends BoardAdapter{
 
                 }else{
                     number = idealBoard.getNumberByIndex(randomColPosition, randomRowPosition);
-//                    System.out.println("Selected number "+ number);
                     if(isNumberByRowAllowed(gameBoard, number, randomColPosition, randomRowPosition)
                             && isNumberByColumnAllowed(gameBoard, number, randomColPosition, randomRowPosition)
                             && isNumberByBoxAllowed(gameBoard, number, randomColPosition, randomRowPosition)){
-                        setNumberByIndex(gameBoard, number,randomColPosition,randomRowPosition);
+
                         hints--;
                         return new int[]{number,randomColPosition,randomRowPosition};
                     }
