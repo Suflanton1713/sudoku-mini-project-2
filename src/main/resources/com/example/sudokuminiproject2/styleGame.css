@@ -109,6 +109,11 @@
     -fx-background-color: #bcf1ae;
 }
 
+.initialHints{
+    -fx-text-fill: purple;
+    -fx-background-color: #f3c9f3;
+}
+
 .highlight {
     -fx-background-color: #e6e6fb;
 }

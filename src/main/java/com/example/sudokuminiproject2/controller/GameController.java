@@ -582,6 +582,21 @@ public class GameController {
         }
     }
 
+
+    /**
+     * Clears all hints from the 6x6 Sudoku board by removing the "initialHints" style class
+     * from each {@code TextField} and resetting any inline styles.
+     **/
+    private void clearInitialHints() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                TextField currentField = textFieldBoard.get(i).get(j);
+                currentField.getStyleClass().removeAll("initialHints");
+                currentField.setStyle("");
+            }
+        }
+    }
+
     /**
      * Displays the game board with initial hints. This method sets the initial hints
      * on the board, updates the text fields with the corresponding numbers,
@@ -598,6 +613,7 @@ public class GameController {
                     gameBoard.setNumberByIndex(gameBoard.getInitialHintsBoard(), gameBoard.getNumberByIndex(i, j), i, j);
                     textFieldBoard.get(j).get(i).setText(initialBoardNumber);
                     textFieldBoard.get(j).get(i).setEditable(false);
+                    textFieldBoard.get(j).get(i).getStyleClass().add("initialHints");
                     System.out.println("Initial hints board: ");
                     System.out.println(gameBoard.showInitialHintsBoard());
                 }
@@ -726,6 +742,7 @@ public class GameController {
      */
     @FXML
     void handleNewGame(ActionEvent event) throws IOException {
+        clearInitialHints();
         gameBoard.restartBoardForNewGame();
         restartTextFieldBoard();
         showGameBoard();
@@ -820,6 +837,7 @@ public class GameController {
     @FXML
     void handleUndo(ActionEvent event) {
         System.out.println(gameBoard.showStack());
+        clearHighlights();
         if (!gameBoard.getStackList().isEmpty()) {
             List<Integer> topList = gameBoard.getStackList().pop();
             int number = topList.get(0);
@@ -833,11 +851,13 @@ public class GameController {
                 textFieldBoard.get(row).get(col).getStyleClass().removeAll("correct", "incorrect");
                 textFieldBoard.get(row).get(col).setStyle("");
                 gameBoard.setMistakesFix(col, row);
+                highlightRowAndColumn(row, col);
                 clearIncorrectNumbersHighlight(row, col);
             } else {
                 gameBoard.setNumberByIndex(gameBoard.getGameBoard(), number, col, row);
                 textFieldBoard.get(row).get(col).setText(String.valueOf(number));
                 gameBoard.setMistakes(col, row);
+                highlightRowAndColumn(row, col);
                 validCorrectNumber(0, row, col);
                 clearIncorrectNumbersHighlight(row, col);
             }
@@ -872,16 +892,17 @@ public class GameController {
 
             for (int row = 0; row < 6; row++) {
                 for (int col = 0; col < 6; col++) {
+                    textFieldBoard.get(row).get(col).getStyleClass().removeAll("notes");
                     if (gameBoard.getNumberByIndex(col, row) == 0) {
                         textFieldBoard.get(row).get(col).clear();
-                        textFieldBoard.get(row).get(col).getStyleClass().removeAll("notes", "incorrect");
+                        textFieldBoard.get(row).get(col).getStyleClass().removeAll( "incorrect");
                         clearIncorrectNumbersHighlight(row, col);
+                        textFieldBoard.get(row).get(col).getStyleClass().removeAll("notes", "hintsButNotes", "incorrect");
                     } else {
                         textFieldBoard.get(row).get(col).setText(String.valueOf(gameBoard.getNumberByIndex(col, row)));
                         textFieldBoard.get(row).get(col).getStyleClass().removeAll("incorrect");
                         clearIncorrectNumbersHighlight(row, col);
                         if (gameBoard.isActualPositionMistake(col, row)) {
-                            textFieldBoard.get(row).get(col).getStyleClass().removeAll("notes");
                             textFieldBoard.get(row).get(col).getStyleClass().add("incorrect");
                             textFieldBoard.get(row).get(col).setStyle("-fx-background-color: #ffcccc;");
                         } else {
@@ -901,15 +922,17 @@ public class GameController {
             undoButton.setDisable(true);
             newGameButton.setDisable(true);
 
-            for (List<TextField> txtFieldRows : textFieldBoard) {
-                for (TextField txtField : txtFieldRows) {
-                    if (txtField.isEditable()) {
-                        txtField.getStyleClass().add("notes");
+
+            for (int row = 0; row < 6; row++) {
+                for (int col = 0; col < 6; col++) {
+                    if (gameBoard.isActualPositionHint(col, row)) {
+                        textFieldBoard.get(row).get(col).getStyleClass().add("hintsButNotes");
                     } else {
-                        txtField.getStyleClass().add("hintsButNotes");
+                        textFieldBoard.get(row).get(col).getStyleClass().add("notes");
                     }
                 }
-            }
+                }
+
             System.out.println("Draft mode activated");
             gameMode = 1;
             System.out.println(gameMode + " Mode ");
