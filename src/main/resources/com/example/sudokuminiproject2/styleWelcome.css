@@ -1,0 +1,22 @@
+.borderPaneClass{
+    -fx-background-image: url('mainGameBackground.png');
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#playButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("playButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#playButton:hover {
+    -fx-background-image: url("playButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#titleLabel{
+    -fx-background-color: transparent;
+    -fx-background-image: url("title.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}

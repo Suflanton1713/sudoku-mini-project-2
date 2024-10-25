@@ -1,0 +1,151 @@
+.gridPaneClass{
+    -fx-background-image: url('mainGameBackground.png');
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#returnButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("returnButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#returnButton:hover {
+    -fx-background-image: url("returnButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#hintButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("hintButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#hintButton:hover {
+    -fx-background-image: url("hintButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#newGameButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("newGameButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#newGameButton:hover {
+    -fx-background-image: url("newGameButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#timeLabel{
+    -fx-background-color: transparent;
+    -fx-background-image: url("timeLabel.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#undoButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("undoButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#undoButton:hover {
+    -fx-background-image: url("undoButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#eraseButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("eraseButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#eraseButton:hover {
+    -fx-background-image: url("eraseButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#notesButton{
+    -fx-background-color: transparent;
+    -fx-background-image: url("notesButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+#notesButton:hover {
+    -fx-background-image: url("notesButtonHover.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+
+.continueTime {
+    -fx-background-color: transparent;
+    -fx-background-image: url("continueTimeButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+.stopTime {
+    -fx-background-image: url("stopTimeButton.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+.correct {
+    -fx-text-fill: #000065;
+}
+.incorrect {
+    -fx-text-fill: #9a0000;
+    -fx-background-color: #fdbaba;
+}
+.default {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+
+.notes{
+    -fx-text-fill: #17953b;
+    -fx-background-color: #bcf1ae;
+}
+
+.hintsButNotes{
+    -fx-text-fill: #0b461c;
+    -fx-background-color: #bcf1ae;
+}
+
+.initialHints{
+    -fx-text-fill: purple;
+    -fx-background-color: #f3c9f3;
+}
+
+.highlight {
+    -fx-background-color: #e6e6fb;
+}
+.labelOff {
+    -fx-background-color:  #f3d7e1;
+    -fx-border-color :  #4e3f51;
+    -fx-text-fill :  #4e3f51;
+    -fx-border-radius :  6;
+    -fx-background-radius:  7;
+    -fx-border-width:  3;
+}
+.labelOn {
+    -fx-background-color:   #aba3cc;
+    -fx-text-fill :  white;
+    -fx-background-radius:  7;
+
+}
+
+.dialog-pane {
+    -fx-background-image: url('winImage.jpeg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-border-color: purple;
+    -fx-border-width: 10px;
+    -fx-pref-width: 1140px; /* Ancho preferido de la alerta */
+    -fx-pref-height: 200px; /* Alto preferido de la alerta */
+
+}
+
+
+.button-bar .button {
+    -fx-background-color: #4682b4; /* Color de fondo de los botones */
+    -fx-text-fill: white;           /* Color del texto de los botones */
+}
