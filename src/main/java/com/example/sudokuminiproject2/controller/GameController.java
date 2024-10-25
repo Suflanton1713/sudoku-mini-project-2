@@ -39,8 +39,8 @@ import java.util.Random;
  * </p>
  *
  * @version 1.0
- * @authors Maria Juliana Saavedra Torres - 202344035
- * @authors Libardo Alejandro Quintero Gómez - 202342181
+ * @author Maria Juliana Saavedra Torres - 202344035
+ * @author Libardo Alejandro Quintero Gómez - 202342181
  * @see GameBoard
  * @see Board
  */

@@ -1,0 +1,6 @@
+module:com.example.sudokuminiproject2
+com.example.sudokuminiproject2
+com.example.sudokuminiproject2.controller
+com.example.sudokuminiproject2.model.board
+com.example.sudokuminiproject2.model.input
+com.example.sudokuminiproject2.view
